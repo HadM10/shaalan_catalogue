@@ -1,0 +1,1046 @@
+:root {
+  --main-orange: #ff6347; 
+  --second-orange: #ff4500; 
+  --main-gray: #333;
+}
+
+@font-face {
+  font-family: 'kuro';
+  src: url('https://ansarportal-deaa9ded50c7.herokuapp.com/assets/fonts/Kuro-Regular.otf'),
+}
+
+*{
+  font-family: 'kuro';
+}
+
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+.sign-in-body, .register-body{
+  height: 100vh;
+}
+
+#loginForm button, #registerForm button{
+  background-color: var(--second-orange);
+}
+
+#loginForm button:hover, #registerForm button:hover{
+  background-color: var(--main-orange);
+}
+
+.container {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  text-align: center;
+}
+
+.container h2 {
+  color: #333;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  margin: 10px 0;
+  color: #555;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+.register-link, .login-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.register-link a, .login-link a {
+  color: var(--second-orange);
+  text-decoration: none;
+}
+
+.register-link a:hover, .login-link a:hover {
+  text-decoration: underline;
+}
+
+/* ADMIN SIDEBAR */
+
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #333;
+  padding-top: 20px;
+  transition: transform 0.3s ease;
+  z-index: 900;
+  transform: translateX(0);
+}
+
+.sidebar h1 {
+  color: #fff;
+  text-align: center;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.sidebar a:hover {
+  background-color: #555;
+}
+
+/* Sub-navigation styles */
+.sidebar ul ul {
+  display: none;
+  padding-left: 20px;
+}
+
+.sidebar li:hover ul {
+  display: block;
+}
+
+.sidebar ul ul li {
+  margin-top: 10px;
+}
+
+.content {
+  margin-left: 250px;
+  padding: 20px;
+}
+
+#logoutBtn {
+  background-color: var(--main-orange);
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: block;
+  margin-top: 20px;
+}
+
+#logoutBtn:hover {
+  background-color: var(--second-orange);
+}
+
+.hamburger {
+  display: none;
+}
+
+
+/* Small screen styling */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-250px);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+.hamburger.open{
+  color: #fff;
+  }
+
+  .hamburger {
+    display: block;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #333;
+    position: fixed;
+    top: 25px;
+    left: 10px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  .hamburger:hover{
+    background-color: var(--second-orange);
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 20px;
+    margin-top: 50px;
+  }
+}
+
+/* STORES */
+
+#storeList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap; /* Adjust this if you don't want them to wrap */
+  gap: 20px;
+}
+
+.store-actions{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.store-actions button {
+    background-color: var(--second-orange);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .store-actions button:hover {
+    background-color: #d43f00;
+  }
+
+.store-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px; /* Fixed width */
+  display: flex;
+  flex-direction: column;
+}
+
+.store-container p{
+  word-wrap: break-word;
+}
+
+.store-images {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 20px;
+  margin-left: -20px; /* Spacing below the slider */
+}
+
+.store-name{
+  width: max-content;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slide {
+  min-width: 100%;
+  list-style-type: none; /* Ensure list bullets are not shown */
+}
+
+.slide img {
+  width: 100%;
+  height: 250px;
+  display: block;
+}
+
+.slider-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  margin-left: 35px;
+}
+
+.slide-btn {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  color: white;
+  padding: 10px;
+  z-index: 10;
+  background-color: var(--main-orange);
+}
+
+.slide-btn:hover{
+  background-color: var(--second-orange);
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+/* ARCHIVED */
+
+#archivedStoreList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap; /* Adjust this if you don't want them to wrap */
+  gap: 20px;
+}
+
+
+
+/* EDIT STORE */
+
+#editStoreForm {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  width: 300px;
+}
+
+#editStoreForm h2 {
+  text-align: center;
+  color: var(--second-orange);
+  margin-bottom: 20px;
+}
+
+#editStoreForm label {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+#editStoreForm input,
+#editStoreForm textarea,
+#editStoreForm select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+#editStoreForm button {
+  background-color: var(--second-orange);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#editStoreForm button:hover {
+  background-color: #d43f00;
+}
+
+
+
+
+/* Add Store Form Styles */
+
+#addStoreFormContainer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  display: none;
+  width: 300px;
+}
+
+#addStoreFormContainer h2 {
+  text-align: center;
+}
+
+#addStoreForm h2 {
+  color: var(--second-orange);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#addStoreForm label {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+#addStoreForm input,
+#addStoreForm textarea,
+#addStoreForm select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+#addStoreForm button {
+  background-color: var(--second-orange);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#addStoreForm button:hover {
+  background-color: #d43f00;
+}
+
+/* ADD CATEGORIES */
+
+/* Style for the form container */
+#addCategoryFormContainer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  display: none;
+  width: 300px;
+}
+
+/* Style for form elements */
+#addCategoryForm {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#addCategoryForm h2 {
+  color: var(--second-orange);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#addCategoryForm label {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+#addCategoryForm input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+#addCategoryForm button {
+  background-color: var(--second-orange);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#addCategoryForm button:hover {
+  background-color: #d43f00;
+}
+
+/* EDIT CATEGORIES */
+
+#editCategoryForm {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+#editCategoryForm h2 {
+  text-align: center;
+  color: var(--second-orange);
+  margin-bottom: 20px;
+}
+
+#editCategoryForm label {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+#editCategoryForm input,
+#editCategoryForm textarea,
+#editCategoryForm select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+#editCategoryForm button {
+  background-color: var(--second-orange);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#editCategoryForm button:hover {
+  background-color: #d43f00;
+}
+
+
+/* VIEW CATEGORIES */
+
+/* Style for category list */
+#categoryList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  gap: 20px;
+  list-style: none;
+}
+
+#categoryList li{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  width: 300px;
+}
+
+/* Style for category item */
+.category-item {
+  width: calc(33.33% - 10px); /* Adjust as needed for responsiveness */
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Style for category name */
+.category-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Style for category image */
+.category-image {
+  width: 300px;
+  height: 250px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+/* Style for edit button */
+.edit-button {
+  background-color: var(--second-orange); /* Use your color variable */
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  height: 40px;
+}
+
+.edit-button:hover {
+  background-color: #d43f00; /* Darker shade of your color */
+}
+
+
+/* OFFERS */
+
+#addOfferFormContainer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  display: none;
+  width: 300px;
+}
+
+#addOfferFormContainer h2 {
+  text-align: center;
+}
+
+#addOfferForm h2 {
+  color: var(--second-orange);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#addOfferForm label {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+#addOfferForm input,
+#addOfferForm textarea,
+#addOfferForm select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+#addOfferForm button {
+  background-color: var(--second-orange);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#addOfferForm button:hover {
+  background-color: #d43f00;
+}
+
+
+/* VIEW OFFERS */
+
+#offerList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.offer-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px; /* Fixed width */
+  display: flex;
+  flex-direction: column;
+}
+
+.offer-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.offer-actions button {
+  background-color: var(--second-orange);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.offer-actions button:hover {
+  background-color: #d43f00;
+}
+
+.offer-image {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.offer-name {
+  width: max-content;
+}
+
+/* EDIT OFFERS */
+
+#editOfferForm {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  width: 300px;
+}
+
+#editOfferForm label {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+#editOfferForm input[type="text"],
+#editOfferForm textarea,
+#editOfferForm select,
+#editOfferForm input[type="date"],
+#editOfferForm input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+#editOfferForm button {
+  background-color: var(--second-orange);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#editOfferForm button:hover {
+  background-color: #d43f00;
+}
+
+
+/* ADD NEWS */
+
+#addNewsFormContainer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  display: none;
+  width: 300px;
+}
+
+#addNewsFormContainer h2 {
+  text-align: center;
+}
+
+#addNewsForm h2 {
+  color: var(--second-orange);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#addNewsForm label {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+#addNewsForm input,
+#addNewsForm textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+#addNewsForm button {
+  background-color: var(--second-orange);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#addNewsForm button:hover {
+  background-color: #d43f00;
+}
+
+/* NEWS */
+
+/* CSS styling for news items */
+
+#newsList{
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.news-container {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  width: 350px;
+  height: auto;
+}
+
+.news-image {
+  width: 350px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.news-title {
+  font-size: 24px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: max-content;
+}
+
+.news-content {
+  margin-bottom: 15px;
+}
+
+.news-publication-date {
+  text-align: right;
+}
+
+.news-publication-date strong {
+  color: var(--main-orange);
+}
+
+.news-actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.news-actions button {
+  background-color: var(--second-orange);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.news-actions button:hover {
+  background-color: #d43f00;
+}
+
+/* IMAGES */
+
+#uploadImagesForm {
+  display: none;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #333; /* Dark background */
+  border: 1px solid #ddd; /* Light gray border */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+#uploadImagesForm label {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff; /* White label text */
+}
+
+#uploadImagesForm select,
+#uploadImagesForm input,
+#uploadImagesForm button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+#uploadImagesForm button {
+  background-color: var(--second-orange); /* Orange button background */
+  color: #fff; /* White button text */
+  cursor: pointer;
+}
+
+#uploadImagesForm button:hover {
+  background-color: #d43f00; /* Darker orange on hover */
+}
+
+#uploadedImagesList {
+  margin-top: 20px;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+#uploadedImagesList li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+
+/* DISPLAY IMAGES */
+
+.image-item {
+  list-style: none;
+  margin-bottom: 20px;
+}
+
+.image-item img {
+  width: 300px;
+  height: 300px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.image-item p {
+  color: #333;
+  font-size: 18px;
+}
+
+.image-item button {
+  background-color: var(--second-orange);
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.image-item button:hover {
+  background-color: #d43f00;
+}
+
+/* CSS Styles for User Cards */
+
+#usersList{
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.user-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-info h3 {
+  color: var(--main-gray); /* Orange */
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.user-info .label {
+  color: var(--second-orange); /* Orange */
+  font-weight: bold;
+}
+
+.user-info .value {
+  color: #000; /* Black */
+}
+
+/* DASHBOARD */
+
+/* Dashboard container styling */
+
+#dashboardStats{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+#dashboardSection h2{
+  text-align: center;
+  margin-bottom: 10%;
+  margin-right: auto;
+}
+
+.dashboard {
+  padding: 20px; /* Add padding around the dashboard */
+  background-color: #f8f9fa; /* Set background color */
+}
+
+.dashboard-title{
+  display: flex;
+  align-items: center;
+}
+
+.dashboard-title p{
+  margin-bottom: 10%;
+ float: left;
+ margin-right: 0;
+}
+
+
+/* Dashboard statistics styling */
+.dashboard-stat {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #fff; /* Set background color for each statistic */
+  border-radius: 8px; /* Add border radius for rounded corners */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+}
+
+.stat-icon {
+  width: 60px; /* Adjust icon container width */
+  height: 60px; /* Adjust icon container height */
+  background-color: var(--second-orange); /* Background color for the icon container */
+  border-top-left-radius: 8px; /* Add rounded corners only to the top left */
+  border-bottom-left-radius: 8px; /* Add rounded corners only to the bottom left */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stat-icon i {
+  color: #fff; /* Icon color */
+  font-size: 30px; /* Icon size */
+}
+
+.stat-info {
+  flex-grow: 1; /* Expand to fill remaining space */
+  padding: 20px; /* Add padding around statistic info */
+}
+
+.stat-label {
+  margin-bottom: 5px; /* Adjust margin between label and value */
+  font-size: 15px; /* Adjust font size of label */
+  color: #495057; /* Label color */
+}
+
+.stat-value {
+  font-size: 20px; /* Adjust font size of value */
+  font-weight: bold; /* Make value bold */
+  color: #343a40; /* Value color */
+}

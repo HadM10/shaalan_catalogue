@@ -1,0 +1,43 @@
+# Composer vendor directory
+/vendor/
+
+# Environment variables file
+.env
+
+# Node modules (if you're using Node.js for frontend)
+node_modules/
+
+# Log files
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# PHPStorm project files
+.idea/
+
+# Sublime Text project files
+*.sublime-project
+*.sublime-workspace
+
+# Backup files
+*.bak
+
+# Temporary files
+*.tmp
+
+# Composer lock file
+composer.lock
+
+# PHPUnit result cache
+.phpunit.result.cache
+
+# Other environment specific files (if applicable)
+.env.local
+.env.*.local
+.env.testing
+
+# Cache directories for various frameworks
+bootstrap/cache/
+storage/

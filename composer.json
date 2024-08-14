@@ -1,0 +1,17 @@
+{
+    "name": "user/shaalan_catalogue",
+    "autoload": {
+        "psr-4": {
+            "User\\ShaalanCatalogue\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "HadM10",
+            "email": "hadmak10@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
