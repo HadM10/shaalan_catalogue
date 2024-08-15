@@ -41,3 +41,6 @@ composer.lock
 # Cache directories for various frameworks
 bootstrap/cache/
 storage/
+
+#htaccess
+.htaccess

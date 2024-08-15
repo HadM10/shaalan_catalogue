@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
-    <link rel="stylesheet" href="admin/css/admin_style.css">
+    <link rel="stylesheet" href="../css/admin_style.css">
 </head>
 
 <body class="sign-in-body">
     <div class="container">
-        <form id="loginForm" action="path/to/your/php/login_script.php" method="post">
+        <form id="loginForm" action="login_admin.php" method="post">
             <h2>Sign In</h2>
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>

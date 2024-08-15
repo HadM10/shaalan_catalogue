@@ -4,8 +4,13 @@ include('headers.php');
 // Include the database connection script
 include('db_connection.php');
 
-// Azure Blob Storage dependencies
-require __DIR__ . '/../../vendor/autoload.php';
+// Include Composer's autoloader
+require_once __DIR__ . '../../../vendor/autoload.php';
+
+// Load the .env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '../../../');
+$dotenv->load();
+
 
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
@@ -20,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $productImageTmpPath = $_FILES['product_image']['tmp_name'];
 
         // Retrieve the Azure Storage account connection string from environment variables
-        $connectionString = getenv('AZURE_STORAGE_CONNECTION_STRING');
+        $connectionString = $_ENV['AZURE_STORAGE_CONNECTION_STRING'];
 
         if (!$connectionString) {
             echo json_encode(["status" => "error", "message" => "Azure Storage connection string is not set."]);
