@@ -1,15 +1,51 @@
 //SHOW HIDE SECTIONS
 
+const links = {
+  dashboard: document.getElementById("dashboardBtn"),
+  viewProducts: document.getElementById("viewProductsBtn"),
+  addProducts: document.getElementById("addProductsBtn"),
+  archivedProducts: document.getElementById("archivedProductsBtn"),
+  viewCategories: document.getElementById("viewCategoriesBtn"),
+  addCategories: document.getElementById("addCategoriesBtn"),
+  viewUsers: document.getElementById("viewUsersBtn"),
+  registerUser: document.getElementById("registerUserBtn"),
+};
+
+// Set active link and show the corresponding section
+function setActiveLink(linkId) {
+  // Remove 'active' class from all links
+  Object.values(links).forEach((link) => link.classList.remove("active"));
+
+  // Ensure the parent link is also inactive
+  Object.values(links).forEach((link) => {
+    const parentLink = link.closest("li")?.parentElement.closest("li");
+    if (parentLink) {
+      parentLink.querySelector("a")?.classList.remove("active");
+    }
+  });
+
+  // Add 'active' class to the selected link
+  if (links[linkId]) {
+    links[linkId].classList.add("active");
+
+    // Ensure the parent link is also active
+    const parentLink = links[linkId].closest("li")?.parentElement.closest("li");
+    if (parentLink) {
+      parentLink.querySelector("a")?.classList.add("active");
+    }
+  }
+}
+
 // CONTENT SECTIONS
 const productList = document.getElementById("productList");
 const categoryList = document.getElementById("categoryList");
-const adminWelcome = document.getElementById("admin-welcome");
 const addProduct = document.getElementById("addProductFormContainer");
 const addCategory = document.getElementById("addCategoryFormContainer");
 const usersList = document.getElementById("usersList");
 const dashboardSection = document.getElementById("dashboardSection");
 const dashboardStats = document.getElementById("dashboardStats");
 const archivedProductsList = document.getElementById("archivedProductList");
+const registerUsers = document.getElementById("registerUserFormContainer");
 
 // CONTENT NAV-LINKS
 const viewProductsBtn = document.getElementById("viewProductsBtn");
@@ -19,16 +55,17 @@ const addCategoriesBtn = document.getElementById("addCategoriesBtn");
 const viewUsersBtn = document.getElementById("viewUsersBtn");
 const dashboardBtn = document.getElementById("dashboardBtn");
 const archivedProductsBtn = document.getElementById("archivedProductsBtn");
+const registerUsersBtn = document.getElementById("registerUserBtn");
 
 function hideAllSections() {
   productList.style.display = "none";
   categoryList.style.display = "none";
-  adminWelcome.style.display = "none";
   addProduct.style.display = "none";
   addCategory.style.display = "none";
   usersList.style.display = "none";
   dashboardSection.style.display = "none";
   archivedProductsList.style.display = "none";
+  registerUsers.style.display = "none";
 }
 
 // LOGIN
@@ -131,13 +168,11 @@ if (window.location.pathname.includes("index.php")) {
   });
 
   // ARCHIVE PRODUCTS
-
   function archiveProduct(productId) {
     // Confirm if the user wants to archive the product
     var confirmArchive = confirm(
       "Are you sure you want to archive this product?"
     );
-
     if (confirmArchive) {
       // Make an AJAX request to update the product's archived status
       var xhr = new XMLHttpRequest();
@@ -165,11 +200,8 @@ if (window.location.pathname.includes("index.php")) {
   }
 
   // VIEW ARCHIVED PRODUCTS
-
-  // Function to fetch and display archived products using AJAX
   function fetchAndDisplayArchivedProducts() {
     var xhr = new XMLHttpRequest();
-
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         try {
@@ -178,66 +210,75 @@ if (window.location.pathname.includes("index.php")) {
           var archivedProducts = productsData.filter(
             (product) => product.archived
           );
-          displayArchivedproducts(archivedproducts);
+          displayArchivedProducts(archivedProducts);
         } catch (error) {
           console.error("Error parsing JSON:", error);
         }
       }
     };
-
     xhr.open("GET", "/shaalan_catalogue/admin/php/view_products.php", true);
     xhr.send();
   }
 
   // Function to display archived products
-  function displayArchivedproducts(archivedproducts) {
-    var archivedproductsList = document.getElementById("archivedproductList");
+  function displayArchivedProducts(archivedProducts) {
+    var archivedProductsList = document.getElementById("archivedProductList");
 
     // Clear existing content
-    archivedproductsList.innerHTML = "";
+    archivedProductsList.innerHTML = "";
 
-    archivedproducts.forEach(function (product) {
+    // Filter only archived products
+    var archivedProducts = archivedProducts.filter(
+      (product) => product.archived
+    );
+
+    archivedProducts.forEach(function (product) {
       // Create a list item for each archived product
       var listItem = document.createElement("li");
       listItem.setAttribute("data-product-id", product.product_id); // Set a unique identifier
 
+      // Check if the product has images and display the first one
+      var productImage = product.image_url || "default-image.jpg"; // Use a default image if no image URL is available
+
       listItem.innerHTML = `
-      <div class="product-container">
-          <img src="${product.images[0]}" alt="product Image" class="product-image">
-          <h2 class="product-name">${product.product_name}</h2>
-          <p class="product-description">${product.description}</p>
-          <div class="product-actions">
-              <button class="reproduct-btn" onclick="reproductproduct(${product.product_id})">Restore</button>
-          </div>
-      </div>
-    `;
+            <div class="product-container">
+                <div class="product-image">
+                    <img src="${productImage}" alt="Product Image">
+                </div>
+                <h2 class="product-name"><strong>Name: </strong>${product.product_name}</h2>
+                <p class="product-category"><strong>Category: </strong>${product.category_name}</p>
+                <div class="product-actions">
+                    <button class="restore-btn" onclick="restoreProduct(${product.product_id})">Restore</button>
+                </div>
+            </div>
+        `;
 
       // Append the list item to the archived products list
       archivedProductsList.appendChild(listItem);
     });
   }
 
-  // Call the fetchAndDisplayArchivedProducts function when the archivedProductsBtn is clicked
+  // Handle the display of archived products when the button is clicked
   archivedProductsBtn.addEventListener("click", function () {
     hideAllSections(); // Hide other sections
     fetchAndDisplayArchivedProducts(); // Fetch and display archived products
-    archivedProductsList.style.display = "flex"; // Display the archived products section
+    setActiveLink("archivedProducts");
+    archivedProductsList.style.display = "flex"; // Show archived products section
   });
 
+  // RESTORE PRODUCTS
   function restoreProduct(productId) {
     // Send an AJAX request to your server to restore the product
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          // product restored successfully, you can update the UI or take further actions if needed
-          alert("Product restored successfully!");
-          // Refresh the archived products list
-          fetchAndDisplayArchivedProducts();
-        } else {
-          // Error handling if the request fails
-          alert("Error restoring product: " + xhr.statusText);
-        }
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // Product restored successfully
+        alert("Product restored successfully!");
+        // Refresh the archived products list
+        fetchAndDisplayArchivedProducts();
+      } else if (xhr.readyState === 4) {
+        // Error handling if the request fails
+        alert("Error restoring product: " + xhr.statusText);
       }
     };
     xhr.open("POST", "/shaalan_catalogue/admin/php/restore_product.php", true);
@@ -291,14 +332,14 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "/shaalan_catalogue/admin/php/view_products.php?product_id=" + productId,
+      "/shaalan_catalogue/admin/php/view_products_details.php?product_id=" +
+        productId,
       true
     );
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         try {
           var productDetails = JSON.parse(xhr.responseText);
-
           // Fetch categories for the dropdown
           fetchCategories(productId);
         } catch (error) {
@@ -317,7 +358,6 @@ if (window.location.pathname.includes("index.php")) {
       if (xhr.readyState === 4 && xhr.status === 200) {
         try {
           var categories = JSON.parse(xhr.responseText);
-
           // Create a dynamic form with fields filled with product details
           createEditForm(productId, categories);
         } catch (error) {
@@ -329,21 +369,26 @@ if (window.location.pathname.includes("index.php")) {
   }
 
   // Function to save changes
-  function saveChanges(productId, updatedData) {
+  function saveChanges(productId) {
     // Create a FormData object and append the data
     var formData = new FormData();
     formData.append("product_id", productId);
 
     // Update these lines to match your PHP script expectations
-    formData.append("new_product_name", updatedData.name);
-    formData.append("new_category", updatedData.category);
-    formData.append("new_description", updatedData.description);
-    formData.append("new_phone_number", updatedData.phone);
-    formData.append("new_instagram_url", updatedData.instagram_url);
-    formData.append("new_facebook_url", updatedData.facebook_url);
-    formData.append("new_tiktok_url", updatedData.tiktok_url);
-    formData.append("new_whatsapp_number", updatedData.whatsapp_number);
-    formData.append("new_location", updatedData.location);
+    formData.append(
+      "new_product_name",
+      document.getElementById("editProductName").value
+    );
+    formData.append(
+      "new_category_id",
+      document.getElementById("editProductCategory").value
+    );
+
+    // Append the image file if it exists
+    var productImage = document.getElementById("editProductImage").files[0];
+    if (productImage) {
+      formData.append("product_image", productImage);
+    }
 
     // Make an AJAX request to save the changes
     var xhr = new XMLHttpRequest();
@@ -376,7 +421,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "/shaalan_catalogue/admin/php/view_product_details.php?product_id=" +
+      "/shaalan_catalogue/admin/php/view_products_details.php?product_id=" +
         productId,
       true
     );
@@ -389,26 +434,28 @@ if (window.location.pathname.includes("index.php")) {
           // Create the form container and populate it with product details
           var formContainer = document.createElement("div");
           formContainer.innerHTML = `
-            <form id="editProductForm">
-                <label for="editProductName">Product Name:</label>
-                <input type="text" id="editProductName" value="${
-                  productDetails.product_name
-                }" required>
+                  <form id="editProductForm">
+                      <label for="editProductName">Product Name:</label>
+                      <input type="text" id="editProductName" value="${
+                        productDetails.product_name
+                      }" required>
 
-                <label for="editProductCategory">Category:</label>
-                <select id="editProductCategory" required>
-                    ${categories
-                      .map(
-                        (category) =>
-                          `<option value="${category.category_id}">${category.category_name}</option>`
-                      )
-                      .join("")}
-                </select>
+                      <label for="editProductCategory">Category:</label>
+                      <select id="editProductCategory" required>
+                          ${categories
+                            .map(
+                              (category) =>
+                                `<option value="${category.category_id}">${category.category_name}</option>`
+                            )
+                            .join("")}
+                      </select>
 
+                      <label for="editProductImage">Product Image:</label>
+                      <input type="file" id="editProductImage" accept="image/*">
 
-                <button type="button" onclick="saveChanges(${productId}, getUpdatedData())">Save Changes</button>
-            </form>
-        `;
+                      <button type="button" onclick="saveChanges(${productId})">Save Changes</button>
+                  </form>
+              `;
 
           // Set the selected category in the dropdown
           var editProductCategorySelect = formContainer.querySelector(
@@ -430,18 +477,6 @@ if (window.location.pathname.includes("index.php")) {
     xhr.send();
   }
 
-  // Function to get updated data from the edit form
-  function getUpdatedData() {
-    var updatedData = {
-      name: document.getElementById("editProductName").value,
-      category: document.getElementById("editProductCategory").value,
-      image: document.getElementById("editProductDescription").value,
-
-      // Add more fields as needed
-    };
-
-    return updatedData;
-  }
   function displayProducts(products) {
     var productList = document.getElementById("productList");
 
@@ -504,6 +539,7 @@ if (window.location.pathname.includes("index.php")) {
     // Fetch and display products when the button is clicked
     hideAllSections();
     fetchAndDisplayProducts();
+    setActiveLink("viewProducts");
     productList.style.display = "flex";
   });
 
@@ -567,6 +603,8 @@ if (window.location.pathname.includes("index.php")) {
     // Fetch and display products when the page loads
     hideAllSections();
 
+    setActiveLink("addProducts");
+
     // Fetch Categories
     fetch("/shaalan_catalogue/admin/php/view_categories.php")
       .then((response) => response.json())
@@ -616,13 +654,17 @@ if (window.location.pathname.includes("index.php")) {
     categoriesData.forEach(function (category) {
       var categoryItem = document.createElement("li");
       categoryItem.setAttribute("data-category-id", category.category_id);
-      categoryItem.classList.add("category-item"); // Add class for styling
-      categoryItem.innerHTML = ` 
-          <img src="${category.category_image}" alt="${category.category_name} Image" class="category-image">
-          <span><Strong> Category Name: </Strong> ${category.category_name}</span>
-          <button class="edit-button" onclick="editCategory(${category.category_id})">Edit</button>
-          <button class="edit-button" onclick="deleteCategory(${category.category_id})">Delete</button>
-      `;
+      categoryItem.classList.add("category-item");
+
+      categoryItem.innerHTML = `
+            <div class="category-content">
+                <h3 class="category-name">${category.category_name}</h3>
+                <div class="category-actions">
+                    <button class="edit-button" onclick="editCategory(${category.category_id})">Edit</button>
+                    <button class="delete-button" onclick="deleteCategory(${category.category_id})">Delete</button>
+                </div>
+            </div>
+        `;
       categoryList.appendChild(categoryItem);
     });
   }
@@ -631,6 +673,7 @@ if (window.location.pathname.includes("index.php")) {
     // Fetch and display categories
     hideAllSections();
     fetchAndDisplayCategories();
+    setActiveLink("viewCategories");
     categoryList.style.display = "flex";
   });
 
@@ -797,20 +840,21 @@ if (window.location.pathname.includes("index.php")) {
     // Fetch and display categories when the page loads
     hideAllSections();
     fetchAndDisplayCategories();
+    setActiveLink("addCategories");
     addCategory.style.display = "block";
   });
 
   // DISPLAY USERS
 
-  // Function to fetch and display users using AJAX
+  // Function to fetch and display users
   function fetchAndDisplayUsers() {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/shaalan_catalogue/admin/php/view_all_users.php", true);
+    xhr.open("GET", "/shaalan_catalogue/admin/php/view_users.php", true);
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         try {
-          var usersData = JSON.parse(xhr.responseText);
-          displayUsers(usersData);
+          var users = JSON.parse(xhr.responseText);
+          displayUsers(users);
         } catch (error) {
           console.error("Error parsing JSON:", error);
         }
@@ -819,43 +863,140 @@ if (window.location.pathname.includes("index.php")) {
     xhr.send();
   }
 
-  // Function to display users on the webpage
-  function displayUsers(usersData) {
-    usersList.innerHTML = ""; // Clear previous content
+  // Function to display users with block/unblock buttons
+  function displayUsers(users) {
+    usersList.innerHTML = ""; // Clear the previous content
 
-    usersData.forEach(function (user) {
-      var userCard = document.createElement("div");
-      userCard.classList.add("user-card");
+    users.forEach(function (user) {
+      var userItem = document.createElement("li");
+      userItem.setAttribute("data-user-id", user.user_id);
+      userItem.classList.add("user-item");
 
-      userCard.innerHTML = `
-    <div class="user-info">
-      <h3>User ID: <span class="highlight">${user.user_id}</span></h3>
-      <p><span class="label">Username:</span> <span class="value">${
-        user.username || "N/A"
-      }</span></p>
-      <p><span class="label">Email:</span> <span class="value">${
-        user.email
-      }</span></p>
-      <p><span class="label">Google Id:</span> <span class="value">${
-        user.google_id || "N/A"
-      }</span></p>
-      <p><span class="label">Created At:</span> <span class="value">${
-        user.created_at
-      }</span></p>
-  </div>
-  
-    `;
+      // Determine the button text based on user status
+      var buttonText = user.status === "blocked" ? "Unblock" : "Block";
+      var buttonAction =
+        user.status === "blocked" ? "unblockUser" : "blockUser";
 
-      usersList.appendChild(userCard);
+      userItem.innerHTML = `
+          <span><strong>Username:</strong> ${user.username}</span>
+          <button class="block-button" onclick="${buttonAction}(${user.user_id}, this)">${buttonText}</button>
+      `;
+      usersList.appendChild(userItem);
     });
   }
 
-  // Call the fetchAndDisplayUsers
+  // Function to block a user
+  function blockUser(userId, button) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/shaalan_catalogue/admin/php/block_user.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        try {
+          var response = JSON.parse(xhr.responseText);
+          if (response.status === "success") {
+            button.textContent = "Unblock";
+            button.setAttribute("onclick", `unblockUser(${userId}, this)`);
+            alert(response.message);
+          } else {
+            alert(response.message);
+          }
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+        }
+      }
+    };
+    xhr.send("user_id=" + userId);
+  }
+
+  // Function to unblock a user
+  function unblockUser(userId, button) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/shaalan_catalogue/admin/php/unblock_user.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        try {
+          var response = JSON.parse(xhr.responseText);
+          if (response.status === "success") {
+            button.textContent = "Block";
+            button.setAttribute("onclick", `blockUser(${userId}, this)`);
+            alert(response.message);
+          } else {
+            alert(response.message);
+          }
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+        }
+      }
+    };
+    xhr.send("user_id=" + userId);
+  }
+
   viewUsersBtn.addEventListener("click", function () {
-    // Fetch and display users
+    // Fetch and display categories
     hideAllSections();
     fetchAndDisplayUsers();
-    usersList.style.display = "flex"; // Assuming you have an element with ID "uploadImagesForm"
+    setActiveLink("viewUsers");
+    usersList.style.display = "flex";
+  });
+
+  //ADD USERS
+
+  // Register User Form submission event listener
+  document
+    .getElementById("registerUserForm")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      // Gather form data
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      // Create FormData object
+      var formData = new FormData();
+      formData.append("username", username);
+      formData.append("password", password);
+
+      // Create XMLHttpRequest object
+      var xhr = new XMLHttpRequest();
+
+      // Configure the request
+      xhr.open("POST", "/shaalan_catalogue/admin/php/register_users.php", true);
+
+      // Define the callback function
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          console.log(xhr.responseText);
+          try {
+            var response = JSON.parse(xhr.responseText);
+            if (response.status === "success") {
+              alert(response.message);
+              // Reset the form
+              document.getElementById("registerUserForm").reset();
+              fetchAndDisplayUsers();
+            } else {
+              alert(response.message);
+            }
+          } catch (error) {
+            console.error("Error parsing JSON:", error);
+          }
+        }
+      };
+
+      // Send the request with FormData object
+      xhr.send(formData);
+    });
+
+  // Event listener for Register User button click
+  registerUsersBtn.addEventListener("click", function () {
+    // Hide all other sections
+    hideAllSections();
+    setActiveLink("registerUser");
+
+    // Show the register user form
+    document.getElementById("registerUserFormContainer").style.display =
+      "block";
   });
 
   // DASHBOARD
@@ -867,68 +1008,52 @@ if (window.location.pathname.includes("index.php")) {
       .then((data) => {
         // Display the dashboard statistics on the page
         const dashboardStats = document.getElementById("dashboardStats");
-        const totalAdmins = document.getElementById("total-admins");
-        totalAdmins.innerHTML = ` 
-          <p ><Strong>Total Admins:</Strong> ${data.total_admins}</p>
-          `;
+
         dashboardStats.innerHTML = ` 
-          <div class="dashboard-stat">
-              <div class="stat-icon">
-                  <i class="fas fa-users"></i>
-              </div>
-              <div class="stat-info">
-                  <p class="stat-label">Total Users:</p>
-                  <p class="stat-value">${data.total_users}</p>
-              </div>
-          </div>
-          <div class="dashboard-stat">
-              <div class="stat-icon">
-                  <i class="fas fa-product"></i>
-              </div>
-              <div class="stat-info">
-                  <p class="stat-label">Total Products:</p>
-                  <p class="stat-value">${data.total_products}</p>
-              </div>
-          </div>
-          <div class="dashboard-stat">
-              <div class="stat-icon">
-                  <i class="fas fa-tags"></i>
-              </div>
-              <div class="stat-info">
-                  <p class="stat-label">Total Offers:</p>
-                  <p class="stat-value">${data.total_offers}</p>
-              </div>
-          </div>
-          <div class="dashboard-stat">
-              <div class="stat-icon">
-                  <i class="fas fa-newspaper"></i>
-              </div>
-              <div class="stat-info">
-                  <p class="stat-label">Total News:</p>
-                  <p class="stat-value">${data.total_news}</p>
-              </div>
-          </div>
-          <div class="dashboard-stat">
-              <div class="stat-icon">
-                  <i class="fas fa-list"></i>
-              </div>
-              <div class="stat-info">
-                  <p class="stat-label">Total Categories:</p>
-                  <p class="stat-value">${data.total_categories}</p>
-              </div>
-          </div>
-          <!-- Add more statistics as needed -->
-      `;
+        <div class="dashboard-stat">
+            <div class="stat-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-info">
+                <p class="stat-label">Total Users:</p>
+                <p class="stat-value">${data.total_users}</p>
+            </div>
+        </div>
+        <div class="dashboard-stat">
+            <div class="stat-icon">
+                <i class="fas fa-box"></i> <!-- Changed to a more suitable icon -->
+            </div>
+            <div class="stat-info">
+                <p class="stat-label">Total Products:</p>
+                <p class="stat-value">${data.total_products}</p>
+            </div>
+        </div>
+        <div class="dashboard-stat">
+            <div class="stat-icon">
+                <i class="fas fa-list"></i>
+            </div>
+            <div class="stat-info">
+                <p class="stat-label">Total Categories:</p>
+                <p class="stat-value">${data.total_categories}</p>
+            </div>
+        </div>
+        <!-- Add more statistics as needed -->
+    `;
       })
       .catch((error) => {
         console.error("Error fetching dashboard stats:", error);
       });
   }
-  // Call the fetchAndDisplayUsers
+
+  // Event listener for the dashboard button click
   dashboardBtn.addEventListener("click", function () {
-    // Fetch and display users
+    // Fetch and display dashboard statistics
     hideAllSections();
     fetchDashboardStats();
-    dashboardSection.style.display = "block"; // Assuming you have an element with ID "uploadImagesForm"
+    setActiveLink("dashboard");
+    dashboardSection.style.display = "block"; // Assuming you have an element with ID "dashboardSection"
   });
+
+  fetchDashboardStats();
+  setActiveLink("dashboard");
 }

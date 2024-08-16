@@ -32,42 +32,48 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 1800)) {
     <button class="hamburger" id="hamburgerBtn">&#9776;</button>
 
     <aside class="sidebar" id="sidebar">
+        <!-- Logo Section -->
+        <div class="logo-container">
+            <img src="assets/images/Shaalanlogo.png" alt="Admin Panel Logo" class="sidebar-logo">
+        </div>
+
         <h1>Admin Panel</h1>
         <ul>
 
             <li><a href="#" id="dashboardBtn">Dashboard</a></li>
 
-            <li><a href="#">Products</a>
+            <li><a href="#" id="productsLink">Products</a>
                 <ul>
                     <li><a href="#" id="viewProductsBtn">View Products</a></li>
                     <li><a href="#" id="addProductsBtn">Add Products</a></li>
                     <li><a href="#" id="archivedProductsBtn">Archived Products</a></li>
                 </ul>
             </li>
-            <li><a href="#">Categories</a>
+            <li><a href="#" id="categoriesLink">Categories</a>
                 <ul>
                     <li><a href="#" id="viewCategoriesBtn">View Categories</a></li>
                     <li><a href="#" id="addCategoriesBtn">Add Category</a></li>
                 </ul>
             </li>
 
-            <li><a href="#">Users</a>
+            <li><a href="#" id="usersLink">Users</a>
 
                 <ul>
                     <li><a href="#" id="viewUsersBtn">View Users</a></li>
-                    <li><a href="#">Create Users</a></li>
+                    <li><a href="#" id="registerUserBtn">Create Users</a></li>
                 </ul>
             </li>
 
             <li><a href="#" id="logoutBtn">Logout</a></li>
         </ul>
+
+
     </aside>
 
     <div class="content">
-        <h1 id="admin-welcome">Welcome to the Admin Panel</h1>
 
         <!-- Dashboard Section -->
-        <section id="dashboardSection" style="display: none">
+        <section id="dashboardSection">
             <div class="dashboard-title">
                 <h2>Dashboard</h2>
                 <p id='total-users'>
@@ -116,6 +122,21 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 1800)) {
 
         <!-- Add an empty list with id "usersList" where the users will be displayed -->
         <ul id="usersList"></ul>
+
+        <!-- Register User Form -->
+        <div id="registerUserFormContainer">
+            <h2>Register User</h2>
+            <form id="registerUserForm" action="#" method="post">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Register User</button>
+            </form>
+        </div>
+
 
     </div>
 

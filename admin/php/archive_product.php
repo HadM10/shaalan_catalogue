@@ -1,7 +1,5 @@
 <?php
 include('headers.php');
-
-// admin/php/archive_product.php
 include('db_connection.php');
 
 // Check if the product_id parameter is provided

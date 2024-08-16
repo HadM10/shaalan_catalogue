@@ -1,6 +1,5 @@
 <?php
 include('headers.php');
-// Include your database connection file
 include_once "db_connection.php";
 
 // Check if the product_id parameter is set

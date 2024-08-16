@@ -101,6 +101,20 @@ button:hover {
 }
 
 /* ADMIN SIDEBAR */
+/* Logo Container */
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px; /* Space between logo and sidebar items */
+}
+
+/* Sidebar Logo */
+.sidebar-logo {
+  height: auto; /* Maintains aspect ratio */
+  width: 150px; /* Adjust based on your preference */
+  box-shadow: 1px 4px 8px var(--second-red);
+  border-radius: 50%;
+  /* Add additional styling as needed */
+}
 
 .sidebar {
   height: 100%;
@@ -117,7 +131,8 @@ button:hover {
 
 .sidebar h1 {
   color: #fff;
-  text-align: center;
+  text-align: left;
+  padding: 10px 20px;
 }
 
 .sidebar ul {
@@ -135,6 +150,11 @@ button:hover {
 
 .sidebar a:hover {
   background-color: var(--second-red);
+}
+
+.sidebar a.active {
+  background-color: var(--second-red); /* Highlight color */
+  font-weight: bold;
 }
 
 /* Sub-navigation styles */
@@ -194,7 +214,7 @@ button:hover {
     border: none;
     color: #333;
     position: fixed;
-    top: 25px;
+    top: 10px;
     left: 10px;
     cursor: pointer;
     z-index: 1000;
@@ -393,6 +413,10 @@ button:hover {
   margin: 0 auto;
 }
 
+#addCategoryFormContainer h2 {
+  text-align: center;
+}
+
 #addCategoryForm h2 {
   color: var(--second-red);
   margin-bottom: 20px;
@@ -471,445 +495,69 @@ button:hover {
 
 /* VIEW CATEGORIES */
 
-/* Style for category list */
+/* Category List Styling */
 #categoryList {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  padding: 0;
-  gap: 20px;
-  list-style: none;
-}
-
-#categoryList li {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-  width: 300px;
-}
-
-/* Style for category item */
-.category-item {
-  width: calc(33.33% - 10px); /* Adjust as needed for responsiveness */
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  background-color: #f9f9f9;
-}
-
-/* Style for category name */
-.category-name {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-/* Style for category image */
-.category-image {
-  width: 300px;
-  height: 250px;
-  border-radius: 5px;
-  margin-bottom: 5px;
-}
-
-/* Style for edit button */
-.edit-button {
-  background-color: var(--second-red); /* Use your color variable */
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 3px;
-  cursor: pointer;
-  height: 40px;
-}
-
-.edit-button:hover {
-  background-color: #d43f00; /* Darker shade of your color */
-}
-
-/* OFFERS */
-
-#addOfferFormContainer {
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
-  display: none;
-  width: 300px;
-}
-
-#addOfferFormContainer h2 {
-  text-align: center;
-}
-
-#addOfferForm h2 {
-  color: var(--second-red);
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-#addOfferForm label {
-  display: block;
-  margin-bottom: 8px;
-  color: #fff;
-}
-
-#addOfferForm input,
-#addOfferForm textarea,
-#addOfferForm select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  box-sizing: border-box;
-}
-
-#addOfferForm button {
-  background-color: var(--second-red);
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#addOfferForm button:hover {
-  background-color: #d43f00;
-}
-
-/* VIEW OFFERS */
-
-#offerList {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.offer-container {
-  border: 1px solid #ccc;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px; /* Fixed width */
-  display: flex;
-  flex-direction: column;
-}
-
-.offer-actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.offer-actions button {
-  background-color: var(--second-red);
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.offer-actions button:hover {
-  background-color: #d43f00;
-}
-
-.offer-image {
-  position: relative;
-  width: 100%;
-  height: 250px;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.offer-name {
-  width: max-content;
-}
-
-/* EDIT OFFERS */
-
-#editOfferForm {
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
-  width: 300px;
-}
-
-#editOfferForm label {
-  display: block;
-  margin-bottom: 8px;
-  color: #fff;
-}
-
-#editOfferForm input[type="text"],
-#editOfferForm textarea,
-#editOfferForm select,
-#editOfferForm input[type="date"],
-#editOfferForm input[type="file"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  box-sizing: border-box;
-}
-
-#editOfferForm button {
-  background-color: var(--second-red);
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#editOfferForm button:hover {
-  background-color: #d43f00;
-}
-
-/* ADD NEWS */
-
-#addNewsFormContainer {
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
-  display: none;
-  width: 300px;
-}
-
-#addNewsFormContainer h2 {
-  text-align: center;
-}
-
-#addNewsForm h2 {
-  color: var(--second-red);
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-#addNewsForm label {
-  display: block;
-  margin-bottom: 8px;
-  color: #fff;
-}
-
-#addNewsForm input,
-#addNewsForm textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  box-sizing: border-box;
-}
-
-#addNewsForm button {
-  background-color: var(--second-red);
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#addNewsForm button:hover {
-  background-color: #d43f00;
-}
-
-/* NEWS */
-
-/* CSS styling for news items */
-
-#newsList {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
-
-.news-container {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  background-color: #f9f9f9;
-  width: 350px;
-  height: auto;
-}
-
-.news-image {
-  width: 350px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 15px;
-}
-
-.news-title {
-  font-size: 24px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: max-content;
-}
-
-.news-content {
-  margin-bottom: 15px;
-}
-
-.news-publication-date {
-  text-align: right;
-}
-
-.news-publication-date strong {
-  color: var(--second-red);
-}
-
-.news-actions {
-  display: flex;
   justify-content: space-around;
-  align-items: center;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.news-actions button {
-  background-color: var(--second-red);
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.news-actions button:hover {
-  background-color: #d43f00;
-}
-
-/* IMAGES */
-
-#uploadImagesForm {
-  display: none;
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #333; /* Dark background */
-  border: 1px solid #ddd; /* Light gray border */
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
-}
-
-#uploadImagesForm label {
-  display: block;
-  margin-bottom: 8px;
-  color: #fff; /* White label text */
-}
-
-#uploadImagesForm select,
-#uploadImagesForm input,
-#uploadImagesForm button {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  box-sizing: border-box;
-}
-
-#uploadImagesForm button {
-  background-color: var(--second-red); /* Orange button background */
-  color: #fff; /* White button text */
-  cursor: pointer;
-}
-
-#uploadImagesForm button:hover {
-  background-color: #d43f00; /* Darker orange on hover */
-}
-
-#uploadedImagesList {
-  margin-top: 20px;
-  list-style: none;
   padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0;
   gap: 20px;
-  flex-wrap: wrap;
-}
-
-#uploadedImagesList li {
-  display: inline-block;
-  margin-right: 10px;
-}
-
-/* DISPLAY IMAGES */
-
-.image-item {
   list-style: none;
-  margin-bottom: 20px;
 }
 
-.image-item img {
+/* Category Item Styling */
+.category-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
   width: 300px;
-  height: 300px;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
 }
 
-.image-item p {
-  color: #333;
-  font-size: 18px;
+.category-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.image-item button {
-  background-color: var(--second-red);
-  color: #fff;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.image-item button:hover {
-  background-color: #d43f00;
-}
-
-/* CSS Styles for User Cards */
-
-#usersList {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.user-card {
-  border: 1px solid #ccc;
-  border-radius: 5px;
+/* Category Name Styling */
+.category-name {
+  font-size: 1.25rem;
+  font-weight: 600;
   margin-bottom: 20px;
-  padding: 15px;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  color: #333;
 }
 
-.user-info h3 {
-  color: var(--main-black); /* Orange */
-  font-size: 18px;
-  margin-bottom: 10px;
+/* Category Actions Styling */
+.category-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-.user-info .label {
-  color: var(--second-red); /* Orange */
-  font-weight: bold;
+/* Button Styling */
+.edit-button,
+.delete-button {
+  flex: 1;
+  background-color: var(--second-red); /* Use your color variable */
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.9rem;
 }
 
-.user-info .value {
-  color: #000; /* Black */
+.edit-button:hover,
+.delete-button:hover {
+  background-color: #d43f00; /* Darker shade of your color */
 }
 
 /* DASHBOARD */
@@ -990,4 +638,119 @@ button:hover {
   font-size: 20px; /* Adjust font size of value */
   font-weight: bold; /* Make value bold */
   color: #343a40; /* Value color */
+}
+
+/* REGISTER USERS */
+
+#registerUserFormContainer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  display: none;
+  width: 300px;
+}
+
+#registerUserFormContainer h2 {
+  text-align: center;
+  color: white;
+  margin-bottom: 20px;
+}
+
+#registerUserForm label {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+#registerUserForm input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#registerUserForm button {
+  background-color: var(--second-red);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#registerUserForm button:hover {
+  background-color: #d43f00;
+}
+
+/* DISPLAY USERS*/
+
+/* Styling for the user list container */
+#usersList {
+  list-style: none;
+  display: none;
+  padding: 0;
+  margin: 20px 0;
+  background-color: #333;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/* Users List Styling */
+#usersList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+  gap: 20px;
+  list-style: none;
+}
+
+/* User Item Styling */
+.user-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.user-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Username Styling */
+.user-item span {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Block/Unblock Button Styling */
+.block-button {
+  background-color: var(--second-red); /* Use your color variable */
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.block-button:hover {
+  background-color: #d43f00; /* Darker shade of your color */
 }
