@@ -11,18 +11,23 @@ require_once __DIR__ . '../../../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '../../../');
 $dotenv->load();
 
-
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
 use MicrosoftAzure\Storage\Blob\Models\CreateBlockBlobOptions;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if the required fields are set
-    if (isset($_POST['product_name'], $_POST['category_id']) && isset($_FILES['product_image'])) {
+    if (isset($_POST['product_name'], $_POST['category_id'], $_POST['new_collection']) && isset($_FILES['product_image'])) {
         $productName = $_POST['product_name'];
         $categoryId = $_POST['category_id'];
         $productImage = $_FILES['product_image']['name'];
         $productImageTmpPath = $_FILES['product_image']['tmp_name'];
+        $isNewCollection = isset($_POST['new_collection']) ? (int) $_POST['new_collection'] : 0;
+
+        // Debug: Log values to verify
+        error_log('Product Name: ' . $productName);
+        error_log('Category ID: ' . $categoryId);
+        error_log('Is New Collection: ' . $isNewCollection);
 
         // Retrieve the Azure Storage account connection string from environment variables
         $connectionString = $_ENV['AZURE_STORAGE_CONNECTION_STRING'];
@@ -53,9 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $imageUrl = "https://shaalancatalogue.blob.core.windows.net/$containerName/$blobName";
 
             // Insert the new product into the database
-            $insertQuery = "INSERT INTO products (product_name, category_id, image_url) VALUES (?, ?, ?)";
+            $insertQuery = "INSERT INTO products (product_name, category_id, image_url, new_collection) VALUES (?, ?, ?, ?)";
             if ($stmt = $conn->prepare($insertQuery)) {
-                $stmt->bind_param("sis", $productName, $categoryId, $imageUrl);
+                // Use the 'i' type for integer values
+                $stmt->bind_param("sisi", $productName, $categoryId, $imageUrl, $isNewCollection);
 
                 if ($stmt->execute()) {
                     echo json_encode(["status" => "success", "message" => "Product added successfully"]);

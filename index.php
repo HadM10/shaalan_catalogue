@@ -4,7 +4,7 @@ include "admin/php/headers.php";
 session_start();
 
 // Check if the user is not authenticated (not logged in or session timeout)
-if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 1800)) {
+if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 3600)) {
     // Destroy the session
     session_destroy();
 
@@ -12,10 +12,8 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 1800)) {
     header("Location: admin/php/login.php");
     exit();
 }
-
 ?>
 
-<!-- Your HTML -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +37,6 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 1800)) {
 
         <h1>Admin Panel</h1>
         <ul>
-
             <li><a href="#" id="dashboardBtn">Dashboard</a></li>
 
             <li><a href="#" id="productsLink">Products</a>
@@ -47,6 +44,7 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 1800)) {
                     <li><a href="#" id="viewProductsBtn">View Products</a></li>
                     <li><a href="#" id="addProductsBtn">Add Products</a></li>
                     <li><a href="#" id="archivedProductsBtn">Archived Products</a></li>
+                    <li><a href="#" id="newCollectionProductsBtn">New Collection Products</a></li> <!-- New Link -->
                 </ul>
             </li>
             <li><a href="#" id="categoriesLink">Categories</a>
@@ -57,7 +55,6 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 1800)) {
             </li>
 
             <li><a href="#" id="usersLink">Users</a>
-
                 <ul>
                     <li><a href="#" id="viewUsersBtn">View Users</a></li>
                     <li><a href="#" id="registerUserBtn">Create Users</a></li>
@@ -66,23 +63,19 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 1800)) {
 
             <li><a href="#" id="logoutBtn">Logout</a></li>
         </ul>
-
-
     </aside>
 
     <div class="content">
-
         <!-- Dashboard Section -->
         <section id="dashboardSection">
             <div class="dashboard-title">
                 <h2>Dashboard</h2>
-                <p id='total-users'>
-                </p>
+                <p id="total-users"></p>
             </div>
             <div id="dashboardStats"></div>
         </section>
 
-        <!-- Add an empty list with id "productList" where the products will be displayed -->
+        <!-- Product List -->
         <ul id="productList"></ul>
 
         <!-- Add Product Form -->
@@ -99,13 +92,18 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 1800)) {
                 <label for="product_image">Image:</label>
                 <input type="file" id="product_image" name="product_image" accept="image/*" required>
 
+                <!-- New Collection Checkbox -->
+                <label for="new_collection">Add to New Collection:</label>
+                <input type="checkbox" id="new_collection" name="new_collection">
+
                 <button type="submit">Add Product</button>
             </form>
         </div>
 
+        <!-- Archived Products List -->
         <ul id="archivedProductList"></ul>
 
-        <!-- Add an empty list with id "categoryList" where the categories will be displayed -->
+        <!-- Category List -->
         <ul id="categoryList"></ul>
 
         <!-- Add Category Form -->
@@ -119,8 +117,7 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 1800)) {
             </form>
         </div>
 
-
-        <!-- Add an empty list with id "usersList" where the users will be displayed -->
+        <!-- Users List -->
         <ul id="usersList"></ul>
 
         <!-- Register User Form -->
@@ -138,9 +135,9 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 1800)) {
         </div>
 
 
-    </div>
+        <ul id="newCollectionProductList"></ul>
 
-    <!-- Your admin panel content goes here -->
+    </div>
 
     <script src="admin/js/admin_script.js"></script>
 </body>

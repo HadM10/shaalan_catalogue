@@ -1,4 +1,4 @@
-//SHOW HIDE SECTIONS
+// SHOW HIDE SECTIONS
 
 const links = {
   dashboard: document.getElementById("dashboardBtn"),
@@ -9,6 +9,7 @@ const links = {
   addCategories: document.getElementById("addCategoriesBtn"),
   viewUsers: document.getElementById("viewUsersBtn"),
   registerUser: document.getElementById("registerUserBtn"),
+  newCollectionProducts: document.getElementById("newCollectionProductsBtn"), // Added link for new collection products
 };
 
 // Set active link and show the corresponding section
@@ -46,6 +47,9 @@ const dashboardSection = document.getElementById("dashboardSection");
 const dashboardStats = document.getElementById("dashboardStats");
 const archivedProductsList = document.getElementById("archivedProductList");
 const registerUsers = document.getElementById("registerUserFormContainer");
+const newCollectionProductList = document.getElementById(
+  "newCollectionProductList"
+);
 
 // CONTENT NAV-LINKS
 const viewProductsBtn = document.getElementById("viewProductsBtn");
@@ -56,6 +60,9 @@ const viewUsersBtn = document.getElementById("viewUsersBtn");
 const dashboardBtn = document.getElementById("dashboardBtn");
 const archivedProductsBtn = document.getElementById("archivedProductsBtn");
 const registerUsersBtn = document.getElementById("registerUserBtn");
+const newCollectionProductsBtn = document.getElementById(
+  "newCollectionProductsBtn"
+); // Added for new collection products
 
 function hideAllSections() {
   productList.style.display = "none";
@@ -66,6 +73,7 @@ function hideAllSections() {
   dashboardSection.style.display = "none";
   archivedProductsList.style.display = "none";
   registerUsers.style.display = "none";
+  newCollectionProductList.style.display = "none"; // Hide new collection products section
 }
 
 // LOGIN
@@ -477,6 +485,157 @@ if (window.location.pathname.includes("index.php")) {
     xhr.send();
   }
 
+  //ADD OR REMOVE FROM NEW COLLECTION
+
+  // ADD TO NEW COLLECTION
+  function addToNewCollection(productId) {
+    // Confirm if the user wants to add the product to the New Collection
+    var confirmAdd = confirm(
+      "Are you sure you want to add this product to the New Collection?"
+    );
+    if (confirmAdd) {
+      // Make an AJAX request to update the product's collection status
+      var xhr = new XMLHttpRequest();
+      xhr.open(
+        "POST",
+        "/shaalan_catalogue/admin/php/add_new_collection.php",
+        true
+      );
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // Check if the add operation was successful
+          var response = JSON.parse(xhr.responseText);
+          if (response.status === "success") {
+            // Refresh the product list to reflect changes
+            alert(response.message);
+            fetchAndDisplayProducts();
+          } else {
+            alert(
+              "Failed to add product to New Collection: " + response.message
+            );
+          }
+        }
+      };
+      // Send the product ID in the request body
+      xhr.send("product_id=" + productId);
+    }
+  }
+
+  // REMOVE FROM NEW COLLECTION
+  function removeFromNewCollection(productId) {
+    // Confirm if the user wants to remove the product from the New Collection
+    var confirmRemove = confirm(
+      "Are you sure you want to remove this product from the New Collection?"
+    );
+    if (confirmRemove) {
+      // Make an AJAX request to update the product's collection status
+      var xhr = new XMLHttpRequest();
+      xhr.open(
+        "POST",
+        "/shaalan_catalogue/admin/php/remove_new_collection.php",
+        true
+      );
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // Check if the remove operation was successful
+          var response = JSON.parse(xhr.responseText);
+          if (response.status === "success") {
+            // Refresh the product list to reflect changes
+            alert(response.message);
+            fetchAndDisplayProducts();
+            fetchAndDisplayNewCollection();
+          } else {
+            alert(
+              "Failed to remove product from New Collection: " +
+                response.message
+            );
+          }
+        }
+      };
+      // Send the product ID in the request body
+      xhr.send("product_id=" + productId);
+    }
+  }
+
+  // Function to display new collection products
+  function displayNewCollectionProducts(products) {
+    var newCollectionProductList = document.getElementById(
+      "newCollectionProductList"
+    );
+
+    // Clear existing content
+    newCollectionProductList.innerHTML = "";
+
+    // Filter products to only include those in the new collection
+    var newCollectionProducts = products.filter(
+      (product) => product.new_collection
+    );
+
+    newCollectionProducts.forEach(function (product) {
+      // Create a list item for each product
+      var listItem = document.createElement("li");
+      listItem.setAttribute("data-product-id", product.product_id); // Set a unique identifier
+
+      // Check if the product has images and display the first one
+      var productImage = product.image_url || "default-image.jpg"; // Use a default image if no image URL is available
+
+      listItem.innerHTML = `
+      <div class="product-container">
+        <div class="product-image">
+          <img src="${productImage}" alt="Product Image">
+        </div>
+        <h2 class="product-name"><strong>Name: </strong>${product.product_name}</h2>
+        <p class="product-category"><strong>Category: </strong>${product.category_name}</p>
+        <div class="product-new-collection">
+          <button class="remove-btn-collection" onclick="removeFromNewCollection(${product.product_id})">Remove from New Collection</button>
+        </div>
+      </div>
+    `;
+
+      // Append the list item to the new collection product list
+      newCollectionProductList.appendChild(listItem);
+    });
+  }
+
+  // Function to fetch and display new collection products using AJAX
+  function fetchAndDisplayNewCollection() {
+    var xhr = new XMLHttpRequest();
+
+    // Configure the request
+    xhr.open(
+      "GET",
+      "/shaalan_catalogue/admin/php/view_new_collection.php",
+      true
+    );
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        try {
+          // Parse the JSON response
+          var products = JSON.parse(xhr.responseText);
+
+          // Display products
+          displayNewCollectionProducts(products);
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+        }
+      }
+    };
+
+    // Send the request
+    xhr.send();
+  }
+
+  newCollectionProductsBtn.addEventListener("click", function () {
+    // Fetch and display products when the button is clicked
+    hideAllSections();
+    fetchAndDisplayNewCollection();
+    setActiveLink("newCollectionProducts");
+    document.getElementById("newCollectionProductList").style.display = "flex";
+  });
+
   function displayProducts(products) {
     var productList = document.getElementById("productList");
 
@@ -499,16 +658,33 @@ if (window.location.pathname.includes("index.php")) {
           <div class="product-image">
             <img src="${productImage}" alt="Product Image">
           </div>
-          <h2 class="product-name"><strong>Name: </strong>${product.product_name}</h2>
-          <p class="product-category"><strong>Category: </strong>${product.category_name}</p>
+          <h2 class="product-name"><strong>Name: </strong>${
+            product.product_name
+          }</h2>
+          <p class="product-category"><strong>Category: </strong>${
+            product.category_name
+          }</p>
           <div class="product-actions">
-            <button class="edit-btn" onclick="editProduct(${product.product_id})">Edit</button>
-            <button class="delete-btn" onclick="confirmDelete(${product.product_id})">Delete</button>
-            <button class="archive-btn" onclick="archiveProduct(${product.product_id})">Archive</button>
+            <button class="edit-btn" onclick="editProduct(${
+              product.product_id
+            })">Edit</button>
+            <button class="delete-btn" onclick="confirmDelete(${
+              product.product_id
+            })">Delete</button>
+            <button class="archive-btn" onclick="archiveProduct(${
+              product.product_id
+            })">Archive</button>
+            </div>
+             <div class="product-new-collection">
+             ${
+               product.new_collection
+                 ? `<button class="remove-btn-collection" onclick="removeFromNewCollection(${product.product_id})">Remove from New Collection</button>`
+                 : `<button class="add-btn-collection" onclick="addToNewCollection(${product.product_id})">Add to New Collection</button>`
+             }
           </div>
         </div>
       `;
-
+      console.log(products);
       // Append the list item to the product list
       productList.appendChild(listItem);
     });
@@ -546,7 +722,6 @@ if (window.location.pathname.includes("index.php")) {
   // ADD PRODUCT
 
   // Add product Form Submission
-
   document
     .getElementById("addProductForm")
     .addEventListener("submit", function (event) {
@@ -556,6 +731,9 @@ if (window.location.pathname.includes("index.php")) {
       var productName = document.getElementById("product_name").value;
       var category = document.getElementById("category_id").value;
       var productImage = document.getElementById("product_image").files[0];
+      var isNewCollection = document.getElementById("new_collection").checked
+        ? 1
+        : 0;
 
       if (!productImage) {
         alert("Please select an image.");
@@ -567,6 +745,12 @@ if (window.location.pathname.includes("index.php")) {
       formData.append("product_name", productName);
       formData.append("category_id", category);
       formData.append("product_image", productImage);
+      formData.append("new_collection", isNewCollection); // Include checkbox value
+
+      // Log FormData to inspect its contents
+      for (var [key, value] of formData.entries()) {
+        console.log(key + ": " + value);
+      }
 
       // Create XMLHttpRequest object (or use fetch API)
       var xhr = new XMLHttpRequest();
