@@ -13,7 +13,7 @@ $categories = array();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $categories[] = array(
-            "category_id" => $row["category_id"],
+            "category_id" => (int) $row["category_id"], // Ensure category_id is an integer
             "category_name" => $row["category_name"]
         );
     }

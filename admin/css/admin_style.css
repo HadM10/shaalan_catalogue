@@ -233,7 +233,8 @@ button:hover {
 
 /* PRODUCTS */
 
-#productList, #newCollectionProductList {
+#productList,
+#newCollectionProductList {
   list-style: none;
   display: flex;
   flex-wrap: wrap; /* Allows items to wrap onto the next line */
@@ -276,7 +277,8 @@ button:hover {
   margin-top: 15px; /* Space above the actions */
 }
 
-.product-actions button, .product-new-collection button {
+.product-actions button,
+.product-new-collection button {
   background-color: var(--second-red);
   color: #fff;
   padding: 10px 15px; /* Adjust padding for a balanced button size */
@@ -286,11 +288,12 @@ button:hover {
   transition: background-color 0.3s ease; /* Smooth transition for hover effect */
 }
 
-.product-actions button:hover, .product-new-collection button:hover {
+.product-actions button:hover,
+.product-new-collection button:hover {
   background-color: #d43f00;
 }
 
-.product-new-collection{
+.product-new-collection {
   margin: 10px 0px;
 }
 
@@ -698,7 +701,6 @@ button:hover {
   display: none;
   padding: 0;
   margin: 20px 0;
-  background-color: #333;
   border-radius: 10px;
   padding: 20px;
 }

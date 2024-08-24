@@ -1,26 +1,23 @@
 <?php
-// admin/php/search_products.php
+// admin/php/filter_by_category.php
 include('db_connection.php');
 include('headers.php');
 
-// Check if the search query parameter exists
-if (isset($_GET['query'])) {
-    $query = $_GET['query'];
+// Check if the category_id parameter exists
+if (isset($_GET['category_id'])) {
+    $category_id = $_GET['category_id'];
 
-    // Prepare the SQL query to search for products by name or category name
-    $searchQuery = "
+    // Prepare the SQL query to get all products by category_id
+    $categoryQuery = "
         SELECT p.product_id, p.product_name, p.category_id, p.image_url, p.archived, p.new_collection, c.category_name
         FROM products p
         LEFT JOIN categories c ON p.category_id = c.category_id
         WHERE p.archived = 0
-        AND (
-            p.product_name LIKE '%$query%' 
-            OR c.category_name LIKE '%$query%' 
-        )
+        AND p.category_id = $category_id
         ORDER BY p.product_name ASC
     ";
 
-    $result = $conn->query($searchQuery);
+    $result = $conn->query($categoryQuery);
 
     $products = array();
 
@@ -41,7 +38,7 @@ if (isset($_GET['query'])) {
     header('Content-Type: application/json');
     echo json_encode($products);
 } else {
-    echo "No search query provided.";
+    echo "No category_id provided.";
 }
 
 $conn->close();
