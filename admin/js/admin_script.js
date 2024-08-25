@@ -768,7 +768,8 @@ if (window.location.pathname.includes("index.php")) {
               alert(response.message);
               addProduct.style.display = "none";
               productList.style.display = "flex";
-              fetchAndDisplayProducts();
+              document.getElementById("addProductForm").reset();
+              // fetchAndDisplayProducts();
             } else {
               alert(response.message);
             }
@@ -1006,8 +1007,10 @@ if (window.location.pathname.includes("index.php")) {
               addCategory.style.display = "none";
               // Show View Categories section
               categoryList.style.display = "flex";
+
+              document.getElementById("addCategoryForm").reset();
               // Fetch and display categories
-              fetchAndDisplayCategories();
+              // fetchAndDisplayCategories();
             } else {
               alert("Error: " + response.error);
             }
