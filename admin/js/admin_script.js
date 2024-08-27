@@ -96,7 +96,7 @@ if (window.location.pathname.includes("login.php")) {
       // Configure the request
       xhr.open(
         "POST",
-        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/login.php",
+        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/login_admin.php",
         true
       );
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
