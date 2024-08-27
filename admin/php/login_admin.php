@@ -5,13 +5,10 @@ include('db_connection.php');
 // Include Composer's autoloader
 require_once __DIR__ . '../../../vendor/autoload.php';
 
-// Load the .env file
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '../../../');
-$dotenv->load();
 
 // Retrieve environment variables for admin credentials
-$adminUsername = $_ENV['ADMIN_USERNAME'];
-$adminPassword = $_ENV['ADMIN_PASSWORD'];
+$adminUsername = getenv('ADMIN_USERNAME');
+$adminPassword = getenv('ADMIN_PASSWORD');
 
 // Default response for invalid request method
 $response = array('status' => 'error', 'message' => 'Invalid request method');
