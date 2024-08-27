@@ -27,9 +27,6 @@ Thumbs.db
 # Temporary files
 *.tmp
 
-# Composer lock file
-composer.lock
-
 # PHPUnit result cache
 .phpunit.result.cache
 
