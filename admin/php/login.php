@@ -10,7 +10,7 @@
 
 <body class="sign-in-body">
     <div class="container">
-        <form id="loginForm" action="login_admin.php" method="post">
+        <form id="loginForm" action="" method="post">
             <h2>Sign In</h2>
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
