@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
-    <link rel="stylesheet" href="../css/admin_style.css">
+    <link rel="stylesheet" href="https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/css/admin_style.css">
 </head>
 
 <body class="sign-in-body">
@@ -21,7 +21,7 @@
             <button type="submit">Sign In</button>
         </form>
     </div>
-    <script src="../js/admin_script.js"></script>
+    <script src="https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/js/admin_script.js"></script>
 </body>
 
 </html>

@@ -94,7 +94,11 @@ if (window.location.pathname.includes("login.php")) {
       var xhr = new XMLHttpRequest();
 
       // Configure the request
-      xhr.open("POST", "/shaalan_catalogue/admin/php/login_admin.php", true);
+      xhr.open(
+        "POST",
+        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/login.php",
+        true
+      );
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
       // Define the callback function
@@ -150,7 +154,11 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
 
     // Configure the request
-    xhr.open("GET", "/shaalan_catalogue/admin/php/logout.php", true);
+    xhr.open(
+      "GET",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/logout.php",
+      true
+    );
 
     // Define the callback function
     xhr.onreadystatechange = function () {
@@ -161,7 +169,8 @@ if (window.location.pathname.includes("index.php")) {
 
           if (response.success) {
             // Logout successful
-            window.location.href = "/shaalan_catalogue/admin/php/login.php";
+            window.location.href =
+              "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/login.php";
           } else {
             console.error("Logout failed:", response.error);
           }
@@ -186,7 +195,7 @@ if (window.location.pathname.includes("index.php")) {
       var xhr = new XMLHttpRequest();
       xhr.open(
         "POST",
-        "/shaalan_catalogue/admin/php/archive_product.php",
+        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/archive_product.php",
         true
       );
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -224,7 +233,11 @@ if (window.location.pathname.includes("index.php")) {
         }
       }
     };
-    xhr.open("GET", "/shaalan_catalogue/admin/php/view_products.php", true);
+    xhr.open(
+      "GET",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_products.php",
+      true
+    );
     xhr.send();
   }
 
@@ -289,7 +302,11 @@ if (window.location.pathname.includes("index.php")) {
         alert("Error restoring product: " + xhr.statusText);
       }
     };
-    xhr.open("POST", "/shaalan_catalogue/admin/php/restore_product.php", true);
+    xhr.open(
+      "POST",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/restore_product.php",
+      true
+    );
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send("product_id=" + productId);
   }
@@ -300,7 +317,11 @@ if (window.location.pathname.includes("index.php")) {
   function deleteProduct(productId) {
     // Make an AJAX request to delete the product
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/shaalan_catalogue/admin/php/delete_product.php", true);
+    xhr.open(
+      "POST",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/delete_product.php",
+      true
+    );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
@@ -340,7 +361,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "/shaalan_catalogue/admin/php/view_products_details.php?product_id=" +
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_products_details.php?product_id=" +
         productId,
       true
     );
@@ -361,7 +382,11 @@ if (window.location.pathname.includes("index.php")) {
   // Function to fetch categories and then call createEditForm
   function fetchCategories(productId) {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/shaalan_catalogue/admin/php/view_categories.php", true);
+    xhr.open(
+      "GET",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_categories.php",
+      true
+    );
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         try {
@@ -400,7 +425,11 @@ if (window.location.pathname.includes("index.php")) {
 
     // Make an AJAX request to save the changes
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/shaalan_catalogue/admin/php/edit_product.php", true);
+    xhr.open(
+      "POST",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/edit_product.php",
+      true
+    );
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         console.log(xhr.responseText);
@@ -429,7 +458,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "/shaalan_catalogue/admin/php/view_products_details.php?product_id=" +
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_products_details.php?product_id=" +
         productId,
       true
     );
@@ -498,7 +527,7 @@ if (window.location.pathname.includes("index.php")) {
       var xhr = new XMLHttpRequest();
       xhr.open(
         "POST",
-        "/shaalan_catalogue/admin/php/add_new_collection.php",
+        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/add_new_collection.php",
         true
       );
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -533,7 +562,7 @@ if (window.location.pathname.includes("index.php")) {
       var xhr = new XMLHttpRequest();
       xhr.open(
         "POST",
-        "/shaalan_catalogue/admin/php/remove_new_collection.php",
+        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/remove_new_collection.php",
         true
       );
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -606,7 +635,7 @@ if (window.location.pathname.includes("index.php")) {
     // Configure the request
     xhr.open(
       "GET",
-      "/shaalan_catalogue/admin/php/view_new_collection.php",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_new_collection.php",
       true
     );
 
@@ -707,7 +736,11 @@ if (window.location.pathname.includes("index.php")) {
       }
     };
 
-    xhr.open("GET", "/shaalan_catalogue/admin/php/view_products.php", true);
+    xhr.open(
+      "GET",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_products.php",
+      true
+    );
     xhr.send();
   }
 
@@ -756,7 +789,11 @@ if (window.location.pathname.includes("index.php")) {
       var xhr = new XMLHttpRequest();
 
       // Configure the request
-      xhr.open("POST", "/shaalan_catalogue/admin/php/add_product.php", true);
+      xhr.open(
+        "POST",
+        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/add_product.php",
+        true
+      );
 
       // Define the callback function
       xhr.onreadystatechange = function () {
@@ -791,7 +828,9 @@ if (window.location.pathname.includes("index.php")) {
     setActiveLink("addProducts");
 
     // Fetch Categories
-    fetch("/shaalan_catalogue/admin/php/view_categories.php")
+    fetch(
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_categories.php"
+    )
       .then((response) => response.json())
       .then((categories) => {
         // Populate the select dropdown with categories
@@ -850,7 +889,11 @@ if (window.location.pathname.includes("index.php")) {
       }
     };
 
-    xhr.open("GET", "/shaalan_catalogue/admin/php/view_categories.php", true);
+    xhr.open(
+      "GET",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_categories.php",
+      true
+    );
     xhr.send();
   }
 
@@ -866,7 +909,11 @@ if (window.location.pathname.includes("index.php")) {
   function deleteCategory(categoryId) {
     // Make an AJAX request to delete the category
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/shaalan_catalogue/admin/php/delete_category.php", true);
+    xhr.open(
+      "POST",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/delete_category.php",
+      true
+    );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
@@ -905,7 +952,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "/shaalan_catalogue/admin/php/view_categories_details.php?category_id=" +
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_categories_details.php?category_id=" +
         categoryId,
       true
     );
@@ -955,7 +1002,11 @@ if (window.location.pathname.includes("index.php")) {
 
     // Make an AJAX request to save the changes
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/shaalan_catalogue/admin/php/edit_category.php", true);
+    xhr.open(
+      "POST",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/edit_category.php",
+      true
+    );
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         try {
@@ -998,7 +1049,11 @@ if (window.location.pathname.includes("index.php")) {
 
       // Make an AJAX request to send the form data to your PHP script
       const xhr = new XMLHttpRequest();
-      xhr.open("POST", "/shaalan_catalogue/admin/php/add_category.php", true);
+      xhr.open(
+        "POST",
+        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/add_category.php",
+        true
+      );
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
           console.log(xhr.responseText);
@@ -1035,7 +1090,11 @@ if (window.location.pathname.includes("index.php")) {
   // Function to fetch and display users
   function fetchAndDisplayUsers() {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/shaalan_catalogue/admin/php/view_users.php", true);
+    xhr.open(
+      "GET",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_users.php",
+      true
+    );
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         try {
@@ -1074,7 +1133,11 @@ if (window.location.pathname.includes("index.php")) {
   // Function to block a user
   function blockUser(userId, button) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/shaalan_catalogue/admin/php/block_user.php", true);
+    xhr.open(
+      "POST",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/block_user.php",
+      true
+    );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -1098,7 +1161,11 @@ if (window.location.pathname.includes("index.php")) {
   // Function to unblock a user
   function unblockUser(userId, button) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/shaalan_catalogue/admin/php/unblock_user.php", true);
+    xhr.open(
+      "POST",
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/unblock_user.php",
+      true
+    );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -1148,7 +1215,11 @@ if (window.location.pathname.includes("index.php")) {
       var xhr = new XMLHttpRequest();
 
       // Configure the request
-      xhr.open("POST", "/shaalan_catalogue/admin/php/register_users.php", true);
+      xhr.open(
+        "POST",
+        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/register_users.php",
+        true
+      );
 
       // Define the callback function
       xhr.onreadystatechange = function () {
@@ -1189,7 +1260,9 @@ if (window.location.pathname.includes("index.php")) {
 
   // Function to fetch dashboard statistics from the server
   function fetchDashboardStats() {
-    fetch("/shaalan_catalogue/admin/php/dashboard.php")
+    fetch(
+      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/dashboard.php"
+    )
       .then((response) => response.json())
       .then((data) => {
         // Display the dashboard statistics on the page

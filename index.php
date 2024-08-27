@@ -1,5 +1,5 @@
 <?php
-include "admin/php/headers.php";
+include "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/headers.php";
 // Start or resume the session
 session_start();
 
@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 3600)) {
     session_destroy();
 
     // Redirect to the login page
-    header("Location: admin/php/login.php");
+    header("Location: https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/login.php");
     exit();
 }
 ?>
@@ -21,7 +21,7 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 3600)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Shaalan Catalogue</title>
-    <link rel="stylesheet" href="admin/css/admin_style.css">
+    <link rel="stylesheet" href="https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/css/admin_style.css">
 </head>
 
 <body>
@@ -32,7 +32,8 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 3600)) {
     <aside class="sidebar" id="sidebar">
         <!-- Logo Section -->
         <div class="logo-container">
-            <img src="assets/images/Shaalanlogo.png" alt="Admin Panel Logo" class="sidebar-logo">
+            <img src="https://shaalanforhardware-f7728d963cd9.herokuapp.com/assets/images/Shaalanlogo.png"
+                alt="Admin Panel Logo" class="sidebar-logo">
         </div>
 
         <h1>Admin Panel</h1>
@@ -139,7 +140,7 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 3600)) {
 
     </div>
 
-    <script src="admin/js/admin_script.js"></script>
+    <script src="https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/js/admin_script.js"></script>
 </body>
 
 </html>
