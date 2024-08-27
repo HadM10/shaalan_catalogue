@@ -812,6 +812,29 @@ if (window.location.pathname.includes("index.php")) {
 
   // VIEW CATEGORIES
 
+  // Function to display categories
+  function displayCategories(categoriesData) {
+    var categoryList = document.getElementById("categoryList");
+    categoryList.innerHTML = ""; // Clear the previous content
+
+    categoriesData.forEach(function (category) {
+      var categoryItem = document.createElement("li");
+      categoryItem.setAttribute("data-category-id", category.category_id);
+      categoryItem.classList.add("category-item");
+
+      categoryItem.innerHTML = `
+            <div class="category-content">
+                <h3 class="category-name">${category.category_name}</h3>
+                <div class="category-actions">
+                    <button class="edit-button" onclick="editCategory(${category.category_id})">Edit</button>
+                    <button class="delete-button" onclick="confirmDeleteCategory(${category.category_id})">Delete</button>
+                </div>
+            </div>
+        `;
+      categoryList.appendChild(categoryItem);
+    });
+  }
+
   // Function to fetch and display categories using AJAX
   function fetchAndDisplayCategories() {
     var xhr = new XMLHttpRequest();
@@ -831,29 +854,6 @@ if (window.location.pathname.includes("index.php")) {
     xhr.send();
   }
 
-  // Function to display categories
-  function displayCategories(categoriesData) {
-    var categoryList = document.getElementById("categoryList");
-    categoryList.innerHTML = ""; // Clear the previous content
-
-    categoriesData.forEach(function (category) {
-      var categoryItem = document.createElement("li");
-      categoryItem.setAttribute("data-category-id", category.category_id);
-      categoryItem.classList.add("category-item");
-
-      categoryItem.innerHTML = `
-            <div class="category-content">
-                <h3 class="category-name">${category.category_name}</h3>
-                <div class="category-actions">
-                    <button class="edit-button" onclick="editCategory(${category.category_id})">Edit</button>
-                    <button class="delete-button" onclick="deleteCategory(${category.category_id})">Delete</button>
-                </div>
-            </div>
-        `;
-      categoryList.appendChild(categoryItem);
-    });
-  }
-
   viewCategoriesBtn.addEventListener("click", function () {
     // Fetch and display categories
     hideAllSections();
@@ -864,36 +864,39 @@ if (window.location.pathname.includes("index.php")) {
 
   // Function to delete a category
   function deleteCategory(categoryId) {
-    var confirmation = confirm(
+    // Make an AJAX request to delete the category
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/shaalan_catalogue/admin/php/delete_category.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        try {
+          var response = JSON.parse(xhr.responseText);
+          if (response.status === "success") {
+            alert(response.message);
+            // Optionally, refresh the category list or update the UI
+            fetchAndDisplayCategories();
+          } else {
+            alert(response.message);
+          }
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+        }
+      }
+    };
+
+    // Send the request with category ID
+    xhr.send("category_id=" + categoryId);
+  }
+
+  // Function to confirm delete for a category
+  function confirmDeleteCategory(categoryId) {
+    var confirmDelete = confirm(
       "Are you sure you want to delete this category?"
     );
-    if (confirmation) {
-      var xhr = new XMLHttpRequest();
-      xhr.open(
-        "POST",
-        "/shaalan_catalogue/admin/php/delete_category.php",
-        true
-      );
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          console.log(xhr.responseText);
-          try {
-            var response = JSON.parse(xhr.responseText);
-            if (response.status === "success") {
-              alert(response.message);
-              fetchAndDisplayCategories();
-            } else {
-              alert(response.message);
-            }
-          } catch (error) {
-            console.error("Error parsing JSON:", error);
-          }
-        }
-      };
-
-      // Send the request to delete the category
-      xhr.send("category_id=" + categoryId);
+    if (confirmDelete) {
+      // Call the function to delete the category from the database
+      deleteCategory(categoryId);
     }
   }
 
@@ -1004,10 +1007,6 @@ if (window.location.pathname.includes("index.php")) {
             if (response.status === "success") {
               alert("Category added successfully.");
               // Hide Add Category section
-              addCategory.style.display = "none";
-              // Show View Categories section
-              categoryList.style.display = "flex";
-
               document.getElementById("addCategoryForm").reset();
               // Fetch and display categories
               // fetchAndDisplayCategories();

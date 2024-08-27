@@ -4,31 +4,37 @@ include('headers.php');
 // Include the database connection script
 include('db_connection.php');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if category_id is set in the POST request
-    if (isset($_POST['category_id'])) {
-        $categoryId = $_POST['category_id'];
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["category_id"])) {
+        // Retrieve form data
+        $categoryId = $_POST["category_id"];
 
-        // Prepare and execute the delete query
+        // Delete category from the 'categories' table
         $deleteQuery = "DELETE FROM categories WHERE category_id = ?";
         if ($stmt = $conn->prepare($deleteQuery)) {
             $stmt->bind_param("i", $categoryId);
 
             if ($stmt->execute()) {
-                echo json_encode(["message" => "Category deleted successfully"]);
+                $response = array("status" => "success", "message" => "Category deleted successfully");
             } else {
-                echo json_encode(["error" => "Delete failed: " . $stmt->error]);
+                $response = array("status" => "error", "message" => "Error deleting category: " . $stmt->error);
             }
 
             $stmt->close();
         } else {
-            echo json_encode(["error" => "Prepare failed: " . $conn->error]);
+            $response = array("status" => "error", "message" => "Failed to prepare the delete statement: " . $conn->error);
         }
+
+        header('Content-Type: application/json'); // Set JSON header
+        echo json_encode($response);
+        exit();
     } else {
-        echo json_encode(["error" => "Missing category_id"]);
+        $response = array("status" => "error", "message" => "Missing category_id");
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        exit();
     }
-} else {
-    echo json_encode(["error" => "Invalid request method"]);
 }
 
 // Close the database connection
