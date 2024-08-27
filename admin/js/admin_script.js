@@ -112,7 +112,8 @@ if (window.location.pathname.includes("login.php")) {
 
             if (response.status === "success") {
               // Redirect to the admin panel on successful login
-              window.location.href = "../../index.php";
+              window.location.href =
+                "https://shaalanforhardware-f7728d963cd9.herokuapp.com/index.php";
             } else {
               // Show error message if login failed
               alert(response.message);
