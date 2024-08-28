@@ -804,8 +804,6 @@ if (window.location.pathname.includes("index.php")) {
             var response = JSON.parse(xhr.responseText);
             if (response.status === "success") {
               alert(response.message);
-              addProduct.style.display = "none";
-              productList.style.display = "flex";
               document.getElementById("addProductForm").reset();
               // fetchAndDisplayProducts();
             } else {
