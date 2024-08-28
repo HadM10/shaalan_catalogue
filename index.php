@@ -32,8 +32,7 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 3600)) {
     <aside class="sidebar" id="sidebar">
         <!-- Logo Section -->
         <div class="logo-container">
-            <img src="https://shaalanforhardware-f7728d963cd9.herokuapp.com/assets/images/Shaalanlogo.png"
-                alt="Admin Panel Logo" class="sidebar-logo">
+            <img src="assets/images/Shaalanlogo.png" alt="Admin Panel Logo" class="sidebar-logo">
         </div>
 
         <h1>Admin Panel</h1>
