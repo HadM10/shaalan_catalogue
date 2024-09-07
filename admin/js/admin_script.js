@@ -474,9 +474,10 @@ if (window.location.pathname.includes("index.php")) {
           formContainer.innerHTML = `
                   <form id="editProductForm">
                       <label for="editProductName">Product Name:</label>
-                      <input type="text" id="editProductName" value="${
+                      <textarea id="editProductName"    value="${
                         productDetails.product_name
-                      }" required>
+                      }" required></textarea>
+                      
 
                       <label for="editProductCategory">Category:</label>
                       <select id="editProductCategory" required>
