@@ -84,7 +84,7 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 3600)) {
             <h2>Add Product</h2>
             <form id="addProductForm" action="#" method="post">
                 <label for="product_name">Product Name:</label>
-                <input type="text" id="product_name" name="product_name" required>
+                <textarea id="product_name" name="product_name" required></textarea>
 
                 <label for="category_id">Category:</label>
                 <select id="category_id" name="category_id" required>
