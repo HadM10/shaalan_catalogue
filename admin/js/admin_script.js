@@ -96,7 +96,7 @@ if (window.location.pathname.includes("login.php")) {
       // Configure the request
       xhr.open(
         "POST",
-        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/login_admin.php",
+        "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/login_admin.php",
         true
       );
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -113,7 +113,7 @@ if (window.location.pathname.includes("login.php")) {
             if (response.status === "success") {
               // Redirect to the admin panel on successful login
               window.location.href =
-                "https://shaalanforhardware-f7728d963cd9.herokuapp.com/index.php";
+                "https://shaalanforhardware-843abba819dd.herokuapp.com/index.php";
             } else {
               // Show error message if login failed
               alert(response.message);
@@ -157,7 +157,7 @@ if (window.location.pathname.includes("index.php")) {
     // Configure the request
     xhr.open(
       "GET",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/logout.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/logout.php",
       true
     );
 
@@ -171,7 +171,7 @@ if (window.location.pathname.includes("index.php")) {
           if (response.success) {
             // Logout successful
             window.location.href =
-              "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/login.php";
+              "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/login.php";
           } else {
             console.error("Logout failed:", response.error);
           }
@@ -196,7 +196,7 @@ if (window.location.pathname.includes("index.php")) {
       var xhr = new XMLHttpRequest();
       xhr.open(
         "POST",
-        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/archive_product.php",
+        "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/archive_product.php",
         true
       );
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -236,7 +236,7 @@ if (window.location.pathname.includes("index.php")) {
     };
     xhr.open(
       "GET",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_products.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/view_products.php",
       true
     );
     xhr.send();
@@ -305,7 +305,7 @@ if (window.location.pathname.includes("index.php")) {
     };
     xhr.open(
       "POST",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/restore_product.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/restore_product.php",
       true
     );
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -320,7 +320,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/delete_product.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/delete_product.php",
       true
     );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -362,7 +362,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_products_details.php?product_id=" +
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/view_products_details.php?product_id=" +
         productId,
       true
     );
@@ -385,7 +385,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_categories.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/view_categories.php",
       true
     );
     xhr.onreadystatechange = function () {
@@ -428,7 +428,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/edit_product.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/edit_product.php",
       true
     );
     xhr.onreadystatechange = function () {
@@ -459,7 +459,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_products_details.php?product_id=" +
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/view_products_details.php?product_id=" +
         productId,
       true
     );
@@ -529,7 +529,7 @@ if (window.location.pathname.includes("index.php")) {
       var xhr = new XMLHttpRequest();
       xhr.open(
         "POST",
-        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/add_new_collection.php",
+        "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/add_new_collection.php",
         true
       );
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -564,7 +564,7 @@ if (window.location.pathname.includes("index.php")) {
       var xhr = new XMLHttpRequest();
       xhr.open(
         "POST",
-        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/remove_new_collection.php",
+        "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/remove_new_collection.php",
         true
       );
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -637,7 +637,7 @@ if (window.location.pathname.includes("index.php")) {
     // Configure the request
     xhr.open(
       "GET",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_new_collection.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/view_new_collection.php",
       true
     );
 
@@ -740,7 +740,7 @@ if (window.location.pathname.includes("index.php")) {
 
     xhr.open(
       "GET",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_products.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/view_products.php",
       true
     );
     xhr.send();
@@ -793,7 +793,7 @@ if (window.location.pathname.includes("index.php")) {
       // Configure the request
       xhr.open(
         "POST",
-        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/add_product.php",
+        "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/add_product.php",
         true
       );
 
@@ -829,7 +829,7 @@ if (window.location.pathname.includes("index.php")) {
 
     // Fetch Categories
     fetch(
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_categories.php"
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/view_categories.php"
     )
       .then((response) => response.json())
       .then((categories) => {
@@ -891,7 +891,7 @@ if (window.location.pathname.includes("index.php")) {
 
     xhr.open(
       "GET",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_categories.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/view_categories.php",
       true
     );
     xhr.send();
@@ -911,7 +911,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/delete_category.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/delete_category.php",
       true
     );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -952,7 +952,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_categories_details.php?category_id=" +
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/view_categories_details.php?category_id=" +
         categoryId,
       true
     );
@@ -1004,7 +1004,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/edit_category.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/edit_category.php",
       true
     );
     xhr.onreadystatechange = function () {
@@ -1051,7 +1051,7 @@ if (window.location.pathname.includes("index.php")) {
       const xhr = new XMLHttpRequest();
       xhr.open(
         "POST",
-        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/add_category.php",
+        "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/add_category.php",
         true
       );
       xhr.onreadystatechange = function () {
@@ -1092,7 +1092,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/view_users.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/view_users.php",
       true
     );
     xhr.onreadystatechange = function () {
@@ -1135,7 +1135,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/block_user.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/block_user.php",
       true
     );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -1163,7 +1163,7 @@ if (window.location.pathname.includes("index.php")) {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/unblock_user.php",
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/unblock_user.php",
       true
     );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -1217,7 +1217,7 @@ if (window.location.pathname.includes("index.php")) {
       // Configure the request
       xhr.open(
         "POST",
-        "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/register_users.php",
+        "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/register_users.php",
         true
       );
 
@@ -1261,7 +1261,7 @@ if (window.location.pathname.includes("index.php")) {
   // Function to fetch dashboard statistics from the server
   function fetchDashboardStats() {
     fetch(
-      "https://shaalanforhardware-f7728d963cd9.herokuapp.com/admin/php/dashboard.php"
+      "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/dashboard.php"
     )
       .then((response) => response.json())
       .then((data) => {
