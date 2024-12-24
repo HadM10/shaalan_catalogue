@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $blobClient->createBlockBlob($containerName, $blobName, $content, $options);
 
             // Construct the URL for the uploaded image
-            $newImageUrl = "https://shaalancatalogue.blob.core.windows.net/$containerName/$blobName";
+            $newImageUrl = "https://shaalanforhardware.blob.core.windows.net/$containerName/$blobName";
         } catch (ServiceException $e) {
             echo json_encode(["status" => "error", "message" => $e->getMessage()]);
             exit();

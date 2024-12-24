@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $blobClient->createBlockBlob($containerName, $blobName, $content, $options);
 
             // Construct the URL for the uploaded image
-            $imageUrl = "https://shaalancatalogue.blob.core.windows.net/$containerName/$blobName";
+            $imageUrl = "https://shaalanforhardware.blob.core.windows.net/$containerName/$blobName";
 
             // Insert the new product into the database
             $insertQuery = "INSERT INTO products (product_name, category_id, image_url, new_collection) VALUES (?, ?, ?, ?)";
