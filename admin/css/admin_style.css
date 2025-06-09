@@ -760,3 +760,118 @@ button:hover {
 .block-button:hover {
   background-color: #d43f00; /* Darker shade of your color */
 }
+
+/* Search functionality styles */
+.search-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-input {
+  width: 300px;
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  font-size: 16px;
+  background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: var(--second-red);
+  box-shadow: 0 0 0 3px rgba(215, 41, 50, 0.1);
+}
+
+.search-input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.clear-search-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.clear-search-btn:hover {
+  background-color: #5a6268;
+}
+
+.search-results-info {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Responsive design for search functionality */
+@media (max-width: 768px) {
+  .search-container {
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding: 0 10px;
+  }
+  
+  .search-input {
+    width: 100%;
+    max-width: 90vw;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  
+  .clear-search-btn {
+    padding: 10px 16px;
+    font-size: 14px;
+    width: auto;
+    min-width: 80px;
+  }
+  
+  .search-results-info {
+    font-size: 13px;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-container {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .search-input {
+    padding: 8px 10px;
+    font-size: 13px;
+    border-radius: 20px;
+  }
+  
+  .clear-search-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+    border-radius: 12px;
+  }
+  
+  .search-results-info {
+    font-size: 12px;
+    margin: 8px 0;
+  }
+}
+
+/* Ensure search containers work well with existing responsive design */
+@media (max-width: 768px) {
+  #productSearchContainer,
+  #archivedProductSearchContainer {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

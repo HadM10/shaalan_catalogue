@@ -12,6 +12,45 @@ const links = {
   newCollectionProducts: document.getElementById("newCollectionProductsBtn"), // Added link for new collection products
 };
 
+// SEARCH FUNCTIONALITY VARIABLES
+let allProductsData = []; // Store all products data for filtering
+let filteredProductsData = []; // Store filtered products data
+let filteredArchivedProductsData = []; // Store filtered archived products data
+
+// Search helper functions
+function normalizeText(text) {
+  return text.toLowerCase().trim();
+}
+
+function filterProductsBySearch(products, searchTerm) {
+  if (!searchTerm) return products;
+  
+  const normalizedSearch = normalizeText(searchTerm);
+  return products.filter(product => {
+    const productName = normalizeText(product.product_name);
+    const categoryName = normalizeText(product.category_name);
+    
+    return productName.includes(normalizedSearch) || 
+           categoryName.includes(normalizedSearch);
+  });
+}
+
+function updateSearchResults(resultElement, totalCount, filteredCount, searchTerm, type = "products") {
+  if (!searchTerm) {
+    resultElement.style.display = "none";
+    return;
+  }
+  
+  resultElement.style.display = "block";
+  if (filteredCount === 0) {
+    resultElement.textContent = `No ${type} found matching "${searchTerm}"`;
+  } else if (filteredCount === totalCount) {
+    resultElement.textContent = `Showing all ${totalCount} ${type}`;
+  } else {
+    resultElement.textContent = `Showing ${filteredCount} of ${totalCount} ${type} matching "${searchTerm}"`;
+  }
+}
+
 // Set active link and show the corresponding section
 function setActiveLink(linkId) {
   // Remove 'active' class from all links
@@ -74,6 +113,21 @@ function hideAllSections() {
   archivedProductsList.style.display = "none";
   registerUsers.style.display = "none";
   newCollectionProductList.style.display = "none"; // Hide new collection products section
+  
+  // Hide search containers and clear search inputs
+  const productSearchContainer = document.getElementById("productSearchContainer");
+  const archivedProductSearchContainer = document.getElementById("archivedProductSearchContainer");
+  const productSearchResults = document.getElementById("productSearchResults");
+  const archivedProductSearchResults = document.getElementById("archivedProductSearchResults");
+  const productSearchInput = document.getElementById("productSearchInput");
+  const archivedProductSearchInput = document.getElementById("archivedProductSearchInput");
+  
+  if (productSearchContainer) productSearchContainer.style.display = "none";
+  if (archivedProductSearchContainer) archivedProductSearchContainer.style.display = "none";
+  if (productSearchResults) productSearchResults.style.display = "none";
+  if (archivedProductSearchResults) archivedProductSearchResults.style.display = "none";
+  if (productSearchInput) productSearchInput.value = "";
+  if (archivedProductSearchInput) archivedProductSearchInput.value = "";
 }
 
 // LOGIN
@@ -243,7 +297,7 @@ if (window.location.pathname.includes("index.php")) {
   }
 
   // Function to display archived products
-  function displayArchivedProducts(archivedProducts) {
+  function displayArchivedProducts(archivedProducts, searchTerm = "") {
     var archivedProductsList = document.getElementById("archivedProductList");
 
     // Clear existing content
@@ -253,6 +307,11 @@ if (window.location.pathname.includes("index.php")) {
     var archivedProducts = archivedProducts.filter(
       (product) => product.archived
     );
+    
+    // Apply search filter if search term exists
+    if (searchTerm) {
+      archivedProducts = filterProductsBySearch(archivedProducts, searchTerm);
+    }
 
     archivedProducts.forEach(function (product) {
       // Create a list item for each archived product
@@ -278,6 +337,16 @@ if (window.location.pathname.includes("index.php")) {
       // Append the list item to the archived products list
       archivedProductsList.appendChild(listItem);
     });
+    
+    // Update search results info
+    const totalArchivedProducts = allProductsData.filter(product => product.archived).length;
+    updateSearchResults(
+      document.getElementById("archivedProductSearchResults"), 
+      totalArchivedProducts, 
+      archivedProducts.length, 
+      searchTerm, 
+      "archived products"
+    );
   }
 
   // Handle the display of archived products when the button is clicked
@@ -286,6 +355,12 @@ if (window.location.pathname.includes("index.php")) {
     fetchAndDisplayArchivedProducts(); // Fetch and display archived products
     setActiveLink("archivedProducts");
     archivedProductsList.style.display = "flex"; // Show archived products section
+    
+    // Show search container
+    const archivedProductSearchContainer = document.getElementById("archivedProductSearchContainer");
+    if (archivedProductSearchContainer) {
+      archivedProductSearchContainer.style.display = "flex";
+    }
   });
 
   // RESTORE PRODUCTS
@@ -667,7 +742,7 @@ if (window.location.pathname.includes("index.php")) {
     document.getElementById("newCollectionProductList").style.display = "flex";
   });
 
-  function displayProducts(products) {
+  function displayProducts(products, searchTerm = "") {
     var productList = document.getElementById("productList");
 
     // Clear existing content
@@ -675,6 +750,11 @@ if (window.location.pathname.includes("index.php")) {
 
     // Filter out archived products
     var activeProducts = products.filter((product) => !product.archived);
+    
+    // Apply search filter if search term exists
+    if (searchTerm) {
+      activeProducts = filterProductsBySearch(activeProducts, searchTerm);
+    }
 
     activeProducts.forEach(function (product) {
       // Create a list item for each product
@@ -719,6 +799,16 @@ if (window.location.pathname.includes("index.php")) {
       // Append the list item to the product list
       productList.appendChild(listItem);
     });
+    
+    // Update search results info
+    const totalActiveProducts = products.filter(product => !product.archived).length;
+    updateSearchResults(
+      document.getElementById("productSearchResults"), 
+      totalActiveProducts, 
+      activeProducts.length, 
+      searchTerm, 
+      "products"
+    );
   }
 
   // VIEW PRODUCTS
@@ -731,6 +821,7 @@ if (window.location.pathname.includes("index.php")) {
       if (xhr.readyState === 4 && xhr.status === 200) {
         try {
           var products = JSON.parse(xhr.responseText);
+          allProductsData = products; // Store products data globally for search
           displayProducts(products);
         } catch (error) {
           console.error("Error parsing JSON:", error);
@@ -752,6 +843,12 @@ if (window.location.pathname.includes("index.php")) {
     fetchAndDisplayProducts();
     setActiveLink("viewProducts");
     productList.style.display = "flex";
+    
+    // Show search container
+    const productSearchContainer = document.getElementById("productSearchContainer");
+    if (productSearchContainer) {
+      productSearchContainer.style.display = "flex";
+    }
   });
 
   // ADD PRODUCT
@@ -1315,4 +1412,83 @@ if (window.location.pathname.includes("index.php")) {
 
   fetchDashboardStats();
   setActiveLink("dashboard");
+  
+  // SEARCH FUNCTIONALITY EVENT LISTENERS
+  
+  // Product search functionality
+  const productSearchInput = document.getElementById("productSearchInput");
+  const clearProductSearchBtn = document.getElementById("clearProductSearch");
+  
+  if (productSearchInput) {
+    // Real-time search as user types
+    productSearchInput.addEventListener("input", function() {
+      const searchTerm = this.value.trim();
+      if (allProductsData.length > 0) {
+        displayProducts(allProductsData, searchTerm);
+      }
+    });
+    
+    // Search on Enter key press
+    productSearchInput.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        const searchTerm = this.value.trim();
+        if (allProductsData.length > 0) {
+          displayProducts(allProductsData, searchTerm);
+        }
+      }
+    });
+  }
+  
+  if (clearProductSearchBtn) {
+    clearProductSearchBtn.addEventListener("click", function() {
+      productSearchInput.value = "";
+      if (allProductsData.length > 0) {
+        displayProducts(allProductsData, "");
+      }
+      const searchResults = document.getElementById("productSearchResults");
+      if (searchResults) {
+        searchResults.style.display = "none";
+      }
+    });
+  }
+  
+  // Archived product search functionality
+  const archivedProductSearchInput = document.getElementById("archivedProductSearchInput");
+  const clearArchivedProductSearchBtn = document.getElementById("clearArchivedProductSearch");
+  
+  if (archivedProductSearchInput) {
+    // Real-time search as user types
+    archivedProductSearchInput.addEventListener("input", function() {
+      const searchTerm = this.value.trim();
+      if (allProductsData.length > 0) {
+        const archivedProducts = allProductsData.filter(product => product.archived);
+        displayArchivedProducts(archivedProducts, searchTerm);
+      }
+    });
+    
+    // Search on Enter key press
+    archivedProductSearchInput.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        const searchTerm = this.value.trim();
+        if (allProductsData.length > 0) {
+          const archivedProducts = allProductsData.filter(product => product.archived);
+          displayArchivedProducts(archivedProducts, searchTerm);
+        }
+      }
+    });
+  }
+  
+  if (clearArchivedProductSearchBtn) {
+    clearArchivedProductSearchBtn.addEventListener("click", function() {
+      archivedProductSearchInput.value = "";
+      if (allProductsData.length > 0) {
+        const archivedProducts = allProductsData.filter(product => product.archived);
+        displayArchivedProducts(archivedProducts, "");
+      }
+      const archivedSearchResults = document.getElementById("archivedProductSearchResults");
+      if (archivedSearchResults) {
+        archivedSearchResults.style.display = "none";
+      }
+    });
+  }
 }

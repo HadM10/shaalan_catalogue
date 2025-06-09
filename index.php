@@ -77,6 +77,12 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 3600)) {
         </section>
 
         <!-- Product List -->
+        <!-- Search container for products -->
+        <div id="productSearchContainer" class="search-container" style="display: none;">
+            <input type="text" id="productSearchInput" class="search-input" placeholder="Search products by name or keyword...">
+            <button id="clearProductSearch" class="clear-search-btn">Clear</button>
+        </div>
+        <div id="productSearchResults" class="search-results-info" style="display: none;"></div>
         <ul id="productList"></ul>
 
         <!-- Add Product Form -->
@@ -102,6 +108,12 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 3600)) {
         </div>
 
         <!-- Archived Products List -->
+        <!-- Search container for archived products -->
+        <div id="archivedProductSearchContainer" class="search-container" style="display: none;">
+            <input type="text" id="archivedProductSearchInput" class="search-input" placeholder="Search archived products by name or keyword...">
+            <button id="clearArchivedProductSearch" class="clear-search-btn">Clear</button>
+        </div>
+        <div id="archivedProductSearchResults" class="search-results-info" style="display: none;"></div>
         <ul id="archivedProductList"></ul>
 
         <!-- Category List -->
