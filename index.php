@@ -1,5 +1,5 @@
 <?php
-include "https://shaalanforhardware-843abba819dd.herokuapp.com/admin/php/headers.php";
+include "admin/php/headers.php";
 // Start or resume the session
 session_start();
 
@@ -79,7 +79,8 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 3600)) {
         <!-- Product List -->
         <!-- Search container for products -->
         <div id="productSearchContainer" class="search-container" style="display: none;">
-            <input type="text" id="productSearchInput" class="search-input" placeholder="Search products by name or keyword...">
+            <input type="text" id="productSearchInput" class="search-input"
+                placeholder="Search products by name or keyword...">
             <button id="clearProductSearch" class="clear-search-btn">Clear</button>
         </div>
         <div id="productSearchResults" class="search-results-info" style="display: none;"></div>
@@ -110,7 +111,8 @@ if (!isset($_SESSION['user_id']) || (time() - $_SESSION['login_time'] > 3600)) {
         <!-- Archived Products List -->
         <!-- Search container for archived products -->
         <div id="archivedProductSearchContainer" class="search-container" style="display: none;">
-            <input type="text" id="archivedProductSearchInput" class="search-input" placeholder="Search archived products by name or keyword...">
+            <input type="text" id="archivedProductSearchInput" class="search-input"
+                placeholder="Search archived products by name or keyword...">
             <button id="clearArchivedProductSearch" class="clear-search-btn">Clear</button>
         </div>
         <div id="archivedProductSearchResults" class="search-results-info" style="display: none;"></div>
